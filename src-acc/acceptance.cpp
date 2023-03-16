@@ -75,8 +75,8 @@ int main(int argc, char* argv[])
 
     // Set TEventLists to make everything faster
     ntuple_thr->Draw(">>list_thr",cuts_thr);
-    ntuple_rec   ->Draw(">>list_rec",cuts_rec);
-    ntuple_dat  ->Draw(">>list_dat",cuts_data);
+    ntuple_rec->Draw(">>list_rec",cuts_rec);
+    ntuple_dat->Draw(">>list_dat",cuts_data);
 
     TEventList* evnt_thr = (TEventList*) gDirectory->Get("list_thr");
     TEventList* evnt_rec = (TEventList*) gDirectory->Get("list_rec");
@@ -109,11 +109,11 @@ int main(int argc, char* argv[])
 
             // Fill the histos and skip the loop if the bin is empty
             ntuple_dat->Project("hdat","PhiPQ",loop_cut);
-            if(empty_histo(hdat)==1){continue;}
+            if(empty_histo(hdat)==1){hdat->Reset();continue;}
             ntuple_thr->Project("hthr","PhiPQ",loop_cut);
-            if(empty_histo(hthr)==1){continue;}
+            if(empty_histo(hthr)==1){hdat->Reset();hthr->Reset();continue;}
             ntuple_rec->Project("hrec","PhiPQ",loop_cut);
-            if(empty_histo(hrec)==1){continue;}
+            if(empty_histo(hrec)==1){hdat->Reset();hrec->Reset();hthr->Reset();continue;}
 
             // Setting nominal condition N_accept>1
             rec_histo_process(hrec);
@@ -129,9 +129,9 @@ int main(int argc, char* argv[])
 
             // Write the histos on the output file
             fresult->cd();
-            hacc->Write((histo_accf+histo_target[vertex_cut_value][data_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
-            hdat->Write((histo_data+histo_target[vertex_cut_value][data_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
-            hdat_corr->Write((histo_corr+histo_target[vertex_cut_value][data_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
+            hacc->Write((histo_accf+histo_target[vertex_cut_value-1][data_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
+            hdat->Write((histo_data+histo_target[vertex_cut_value-1][data_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
+            hdat_corr->Write((histo_corr+histo_target[vertex_cut_value-1][data_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
             gROOT->cd();
 
             hdat->Reset();

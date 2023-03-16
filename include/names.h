@@ -22,6 +22,7 @@ std::string simu_targets[4] = { "C" , "Fe" , "Pb" , "D2" };
 std::string data_targets[3] = { "C" , "Fe" , "Pb" };
 
 std::string histo_target[2][3] = { { "DC" , "DFe" , "DPb" } , { "C" , "Fe" , "Pb" } };
+
 std::string histo_data = "data_";
 std::string histo_accf = "accfactor_";
 std::string histo_corr = "corrdata_";
