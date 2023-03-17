@@ -57,8 +57,8 @@ int main(int argc, char* argv[])
     TNtuple *rcfactors_tuple = new TNtuple(ntuple_rc_name,ntuple_rc_name,"rc_factor_1:rc_factor_3:Q2_bin:Nu_bin:Zh_bin:Pt2_bin:Phi_bin"); 
 
     // Target proton to neutron ratio
-    double NAZ;
-    assign_n2p_ratio(&NAZ, targets[vertex_cut_value-1][dat_target_index]);
+    double NAZ = 0;
+    assign_n2p_ratio(NAZ, targets[vertex_cut_value-1][dat_target_index]);
 
     double f1, f2, f3;
     double m = TMath::Power((kMassNeutron+kMassPion), 2);

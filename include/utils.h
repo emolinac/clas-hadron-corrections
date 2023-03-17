@@ -66,13 +66,13 @@ int get_filled_bins(TH1F* h)
 
 void assign_n2p_ratio(double& NAZ, std::string target)
 {
-    if(target == "C") *NAZ = 0.5;
-    else if(target == "Fe")  *NAZ = 0.5;
-    else if(target == "Pb")  *NAZ = 82./208.;
-    else if(target == "DC")  *NAZ = 0.5;
-    else if(target == "DFe") *NAZ = 0.5;
-    else if(target == "DPb") *NAZ = 0.5;
-    else *NAZ = 0.5;
+    if(target == "C") NAZ = 0.5;
+    else if(target == "Fe")  NAZ = 0.5;
+    else if(target == "Pb")  NAZ = 82./208.;
+    else if(target == "DC")  NAZ = 0.5;
+    else if(target == "DFe") NAZ = 0.5;
+    else if(target == "DPb") NAZ = 0.5;
+    else NAZ = 0.5;
 
     return;
 }
