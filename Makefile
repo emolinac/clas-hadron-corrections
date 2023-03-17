@@ -3,7 +3,7 @@ INC     := ./include
 SRC_ACC := ./src-acc
 SRC_RAD := ./src-rad
 
-CXX := g++ -std=c++17
+CXX := g++ -std=c++11
 CFLAGS := -Wall -g
 
 ROOTCFLAGS  := $(shell root-config --cflags)

@@ -41,7 +41,7 @@ int main(int argc, char* argv[])
 
     // Obtain the tuple that contains the centroids
     float Q2_centroid, Xb_centroid, Zh_centroid, Pt_centroid, Phi_centroid, Q2_centroid_bin, Xb_centroid_bin, Zh_centroid_bin, Pt_centroid_bin, Phi_centroid_bin;
-    TNtuple* centroids = (TNtuple*) fphi->Get("centroids_data");
+    TNtuple* centroids = (TNtuple*) fcentroids->Get("centroids_data");
     centroids->SetBranchAddress("Q2"     , &Q2_centroid     );
     centroids->SetBranchAddress("Xb"     , &Xb_centroid     );
     centroids->SetBranchAddress("Zh"     , &Zh_centroid     );
@@ -87,7 +87,7 @@ int main(int argc, char* argv[])
 	        if(Mx2<m)
             {
                 std::cout<<"Missing mass condition not fulfilled! Setting rc factor to -1"<<std::endl;
-	            rcfactors_tuple->Fill(-1,-1,Q2_centroid_bin,Xb_centroid_bin,Zh_centroid_bin,Pt2_centroid_bin,Phi_centroid_bin-1);
+	            rcfactors_tuple->Fill(-1,-1,Q2_centroid_bin,Xb_centroid_bin,Zh_centroid_bin,Pt_centroid_bin,Phi_centroid_bin-1);
 	            continue;
 	        }
 
@@ -98,7 +98,7 @@ int main(int argc, char* argv[])
 	        if(TMath::IsNaN(f1) || f1 == a3) f1 = 0;
 	        if(TMath::IsNaN(f2) || f2 == a3) f2 = 0;
 	        if(TMath::IsNaN(f3) || f3 == a3) f3 = 0;
-	        rcfactors_tuple->Fill(f1,f3,Q2_centroid_bin,Xb_centroid_bin,Zh_centroid_bin,Pt2_centroid_bin,Phi_centroid_bin);
+	        rcfactors_tuple->Fill(f1,f3,Q2_centroid_bin,Xb_centroid_bin,Zh_centroid_bin,Pt_centroid_bin,Phi_centroid_bin);
 	        std::cout<<"Q2="<<Q2_centroid<<" || Xb="<<Xb_centroid<<" || Zh="<<Zh_centroid<<" || Pt="<<Pt_centroid<<std::endl;
 	        std::cout<<"RC without exc contribution      = "<<f1<<std::endl;
 	        std::cout<<"RC with exc contribution         = "<<f2<<std::endl;
