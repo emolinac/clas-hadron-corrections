@@ -46,3 +46,17 @@ void acc_histo_process(TH1F* h)
     }
 }
 
+// RAD
+
+// Return number of non-empty bins
+int get_filled_bins(TH1F* h)
+{
+    int filled_bins = 0;
+    for(int bin = 1 ; bin <= h->GetNbinsX() ; bin++)
+    {
+        if(h->GetBinContent(bin)!=0)filled_bins++;
+    }
+
+    return filled_bins;
+}
+

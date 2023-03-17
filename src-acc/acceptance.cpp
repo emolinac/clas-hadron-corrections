@@ -142,5 +142,9 @@ int main(int argc, char* argv[])
         }
     }
 
+    // Close TFiles
+    fsim->Close();
+    fdat->Close();
+    
     return 1;
 }

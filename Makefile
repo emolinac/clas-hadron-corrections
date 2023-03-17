@@ -10,13 +10,16 @@ ROOTCFLAGS  := $(shell root-config --cflags)
 ROOTLDFLAGS := $(shell root-config --ldflags)
 ROOTLIBS    := $(shell root-config --libs) -lEG
 
-all: ${BIN}/acceptance ${BIN}/centroids
+all: ${BIN}/acceptance ${BIN}/centroids ${BIN}/fit-phipq
 
 ${BIN}/acceptance: ${SRC_ACC}/acceptance.cpp
 	${CXX} -I${INC} ${ROOTCFLAGS} ${SRC_ACC}/acceptance.cpp -o ${BIN}/acceptance ${ROOTLIBS}
 
 ${BIN}/centroids: ${SRC_RAD}/centroids.cpp
 	${CXX} -I${INC} ${ROOTCFLAGS} ${SRC_RAD}/centroids.cpp -o ${BIN}/centroids ${ROOTLIBS}
+
+${BIN}/fit-phipq: ${SRC_RAD}/fit-phipq.cpp
+	${CXX} -I${INC} ${ROOTCFLAGS} ${SRC_RAD}/fit-phipq.cpp -o ${BIN}/fit-phipq ${ROOTLIBS}
 
 clean:
 	rm ${BIN}/*

@@ -111,5 +111,9 @@ int main(int argc, char* argv[])
         }
     }
 
+    // Close TFiles
+    fresult->Close();
+    fdat->Close();
+    
     return 1;
 }
