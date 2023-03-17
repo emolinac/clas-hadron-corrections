@@ -20,6 +20,6 @@ const float Phi_max   =  180.;
 const float delta_Phi = (Phi_max-Phi_min)/N_Phi;
 
 // Additional cuts
-TCut data_add_cut[2] = { "TMath::Abs(YC)<1.4" , "TMath::Abs(deltaZ)<3." };
-TCut rec_add_cut[2]  = { "TMath::Abs(YC)<1.4" , "TMath::Abs(deltaZ)<3." };
-TCut thr_add_cut[1]  = { "TMath::Abs(deltaZ)<3." };
+TCut dat_add_cut[2] = { "TMath::Abs(YC)<1.4" , "TMath::Abs(deltaZ)<3." };
+TCut rec_add_cut[2] = { "TMath::Abs(YC)<1.4" , "TMath::Abs(deltaZ)<3." };
+TCut thr_add_cut[1] = { "TMath::Abs(deltaZ)<3." };

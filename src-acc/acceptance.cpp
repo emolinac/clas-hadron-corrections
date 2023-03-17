@@ -12,8 +12,8 @@
 int main(int argc, char* argv[])
 {
     // Target settings
-    int simu_target_index = std::stoi(argv[1]);
-    int data_target_index = std::stoi(argv[2]);
+    int sim_target_index = std::stoi(argv[1]);
+    int dat_target_index = std::stoi(argv[2]);
     int vertex_cut_value  = std::stof(argv[3]);
 
     // Q2, Nu, Zh bin settings
@@ -29,19 +29,19 @@ int main(int argc, char* argv[])
     double Zh_max = Zh_limits[Zh_bin+1];
     
     // Open the simulations and data
-    TFile* fsimu = new TFile((simu_dir+simu_targets[simu_target_index]+simu_ext).c_str(),"READ");
-    TFile* fdata = new TFile((data_dir+data_targets[data_target_index]+data_ext).c_str(),"READ");
+    TFile* fsim = new TFile((sim_dir+sim_targets[sim_target_index]+sim_ext).c_str(),"READ");
+    TFile* fdat = new TFile((dat_dir+dat_targets[dat_target_index]+dat_ext).c_str(),"READ");
 
     // Open create results folder
-    std::string output_file_name = acc_result_dir+data_targets[data_target_index]+"_VC"+std::to_string(vertex_cut_value)+"_"+
+    std::string output_file_name = acc_result_dir+"acc"+dat_targets[dat_target_index]+"_VC"+std::to_string(vertex_cut_value)+"_"+
                                    std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+".root";
     TFile* fresult = new TFile(output_file_name.c_str(),"RECREATE");
     gROOT->cd();
 
     // Obtain the tuples
-    TNtuple* ntuple_thr = (TNtuple*) fsimu->Get(ntuple_thr_name);
-    TNtuple* ntuple_rec = (TNtuple*) fsimu->Get(ntuple_rec_name);
-    TNtuple* ntuple_dat = (TNtuple*) fdata->Get(ntuple_dat_name);
+    TNtuple* ntuple_thr = (TNtuple*) fsim->Get(ntuple_thr_name);
+    TNtuple* ntuple_rec = (TNtuple*) fsim->Get(ntuple_rec_name);
+    TNtuple* ntuple_dat = (TNtuple*) fdat->Get(ntuple_dat_name);
     
     if(ntuple_thr==NULL||ntuple_rec==NULL||ntuple_dat==NULL)
     {
@@ -60,12 +60,12 @@ int main(int argc, char* argv[])
     TCut Zh_cut = Form("Zh>%f&&Zh<%f",Zh_min,Zh_max);
     TCut VZ_cut = Form("VC_TM==%i",vertex_cut_value);
     
-    TCut cuts_data = Q2_cut&&Nu_cut&&Zh_cut&&VZ_cut;
-    TCut cuts_thr  = Q2_cut&&Nu_cut&&Zh_cut;
-    TCut cuts_rec  = Q2_cut&&Nu_cut&&Zh_cut;
+    TCut cuts_dat = Q2_cut&&Nu_cut&&Zh_cut&&VZ_cut;
+    TCut cuts_thr = Q2_cut&&Nu_cut&&Zh_cut;
+    TCut cuts_rec = Q2_cut&&Nu_cut&&Zh_cut;
 
     // Setting additional data cuts
-    for(int i = 0 ; i < sizeof(data_add_cut)/sizeof(data_add_cut) ; i++) cuts_data += data_add_cut[i];
+    for(int i = 0 ; i < sizeof(dat_add_cut)/sizeof(dat_add_cut) ; i++) cuts_dat += dat_add_cut[i];
     
     // Setting additional cuts to thrown simul
     for(int i = 0 ; i < sizeof(thr_add_cut)/sizeof(thr_add_cut) ; i++) cuts_thr += thr_add_cut[i];
@@ -76,7 +76,7 @@ int main(int argc, char* argv[])
     // Set TEventLists to make everything faster
     ntuple_thr->Draw(">>list_thr",cuts_thr);
     ntuple_rec->Draw(">>list_rec",cuts_rec);
-    ntuple_dat->Draw(">>list_dat",cuts_data);
+    ntuple_dat->Draw(">>list_dat",cuts_dat);
 
     TEventList* evnt_thr = (TEventList*) gDirectory->Get("list_thr");
     TEventList* evnt_rec = (TEventList*) gDirectory->Get("list_rec");
@@ -129,9 +129,9 @@ int main(int argc, char* argv[])
 
             // Write the histos on the output file
             fresult->cd();
-            hacc->Write((histo_accf+histo_target[vertex_cut_value-1][data_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
-            hdat->Write((histo_data+histo_target[vertex_cut_value-1][data_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
-            hdat_corr->Write((histo_corr+histo_target[vertex_cut_value-1][data_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
+            hacc->Write((histo_accf+histo_target[vertex_cut_value-1][dat_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
+            hdat->Write((histo_data+histo_target[vertex_cut_value-1][dat_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
+            hdat_corr->Write((histo_corr+histo_target[vertex_cut_value-1][dat_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
             gROOT->cd();
 
             hdat->Reset();
