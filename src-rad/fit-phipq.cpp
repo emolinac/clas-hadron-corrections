@@ -64,7 +64,7 @@ int main(int argc, char* argv[])
         for(int Phi_bin = 0 ; Phi_bin < N_Phi ; Phi_bin++)
         {
             // Obtain the acceptance corrected Phi histo
-            h = (TH1F*) fphi->Get((histo_corr+histo_target[vertex_cut_value-1][dat_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
+            h = (TH1F*) fphi->Get((histo_corr+targets[vertex_cut_value-1][dat_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
 
             // Check the minimum number of non-empty bins to perform fit
             int not_empty_bins = get_filled_bins(h);
