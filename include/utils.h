@@ -55,6 +55,8 @@ void acc_histo_process(TH1F* h)
 // Return number of non-empty bins
 int get_filled_bins(TH1F* h)
 {
+    if(h==NULL) return 0;
+    
     int filled_bins = 0;
     for(int bin = 1 ; bin <= h->GetNbinsX() ; bin++)
     {
