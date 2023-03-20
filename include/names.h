@@ -12,9 +12,9 @@ std::string dat_ext = "_data_Npion.root";
 std::string sim_ext = "1_simul.root";
 
 // TNtuples
-const char* ntuple_thr_name = "ntuple_thr";
+const char* ntuple_thr_name = "ntuple_thrown";
 const char* ntuple_rec_name = "ntuple_accept";
-const char* ntuple_dat_name = "ntuple_dat";
+const char* ntuple_dat_name = "ntuple_data";
 const char* ntuple_rc_name  = "rcfactors_tuple";
     
 // Targets
