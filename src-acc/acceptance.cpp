@@ -106,51 +106,49 @@ int main(int argc, char* argv[])
     // Start the acceptance correction process
     for(int Pt2_bin = 0 ; Pt2_bin < N_Pt2 ; Pt2_bin++)
     {
-        for(int Phi_bin = 0 ; Phi_bin < N_Phi ; Phi_bin++)
-        {
-            // Stablish the Pt2 cut
-            double Pt2_bin_min = delta_Pt2 *  Pt2_bin;
-            double Pt2_bin_max = delta_Pt2 * (Pt2_bin+1);
-            TCut loop_cut = Form("Pt2>%f&&Pt2<%f",Pt2_bin_min,Pt2_bin_max);
+        // Stablish the Pt2 cut
+        double Pt2_bin_min = delta_Pt2 *  Pt2_bin;
+        double Pt2_bin_max = delta_Pt2 * (Pt2_bin+1);
+        TCut loop_cut = Form("Pt2>%f&&Pt2<%f",Pt2_bin_min,Pt2_bin_max);
 
-            // Fill the histos and skip the loop if the bin is empty
-            ntuple_dat->Project("hdat","PhiPQ",loop_cut);
-            if(empty_histo(hdat)==1){hdat->Reset();continue;}
-            ntuple_thr->Project("hthr","PhiPQ",loop_cut);
-            if(empty_histo(hthr)==1){hdat->Reset();hthr->Reset();continue;}
-            ntuple_rec->Project("hrec","PhiPQ",loop_cut);
-            if(empty_histo(hrec)==1){hdat->Reset();hrec->Reset();hthr->Reset();continue;}
+        // Fill the histos and skip the loop if the bin is empty
+        ntuple_dat->Project("hdat","PhiPQ",loop_cut);
+        if(empty_histo(hdat)==1){hdat->Reset();continue;}
+        ntuple_thr->Project("hthr","PhiPQ",loop_cut);
+        if(empty_histo(hthr)==1){hdat->Reset();hthr->Reset();continue;}
+        ntuple_rec->Project("hrec","PhiPQ",loop_cut);
+        if(empty_histo(hrec)==1){hdat->Reset();hrec->Reset();hthr->Reset();continue;}
 
-            // Setting nominal condition N_accept>1
-            rec_histo_process(hrec);
+        // Setting nominal condition N_accept>1
+        rec_histo_process(hrec);
 
-            // Obtain acceptance factor as an histo
-            hacc->Divide(hrec,hthr,1,1,"B");
+        // Obtain acceptance factor as an histo
+        hacc->Divide(hrec,hthr,1,1,"B");
 
-            // Setting the acc<1 condition
-            acc_histo_process(hacc);
+        // Setting the acc<1 condition
+        acc_histo_process(hacc);
 
-            // Obtain acceptance corrected data
-            hdat_corr->Divide(hdat,hacc,1,1);
+        // Obtain acceptance corrected data
+        hdat_corr->Divide(hdat,hacc,1,1);
 
-            // Write the histos on the output file
-            fresult->cd();
-            hacc->Write((histo_accf+targets[vertex_cut_value-1][dat_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
-            hdat->Write((histo_data+targets[vertex_cut_value-1][dat_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
-            hdat_corr->Write((histo_corr+targets[vertex_cut_value-1][dat_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
-            gROOT->cd();
+        // Write the histos on the output file
+        fresult->cd();
+        hacc->Write((histo_accf+targets[vertex_cut_value-1][dat_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
+        hdat->Write((histo_data+targets[vertex_cut_value-1][dat_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
+        hdat_corr->Write((histo_corr+targets[vertex_cut_value-1][dat_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
+        gROOT->cd();
 
-            hdat->Reset();
-            hrec->Reset();
-            hthr->Reset();
-            hacc->Reset();
-            hdat_corr->Reset();
-        }
+        hdat->Reset();
+        hrec->Reset();
+        hthr->Reset();
+        hacc->Reset();
+        hdat_corr->Reset();        
     }
 
     // Close TFiles
     fsim->Close();
     fdat->Close();
+    fresult->Close();
     
     return 1;
 }
