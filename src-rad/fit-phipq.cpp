@@ -106,9 +106,13 @@ int main(int argc, char* argv[])
             
                     // Write the entry in the TNtuple
                     fittuple->Fill(Q2_centroid, Xb_centroid, Zh_centroid, Pt_centroid, A, AErr, Ac, AcErr, Acc, AccErr, ChiSQ);
+
+                    break;
                 }
             }
         }
+
+        h->Reset();
     }
 
     // Write the TNtuple
