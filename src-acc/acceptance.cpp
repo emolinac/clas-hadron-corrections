@@ -11,6 +11,9 @@
 
 int main(int argc, char* argv[])
 {
+    // Check number of arguments is correct
+    if(argc!=7) {std::cout<<"Incorrect number of argument!"<<std::endl; return 1;}
+
     // Target settings
     int sim_target_index = std::stoi(argv[1]);
     int dat_target_index = std::stoi(argv[2]);
@@ -20,9 +23,6 @@ int main(int argc, char* argv[])
     int Q2_bin = std::stoi(argv[4]);
     int Nu_bin = std::stoi(argv[5]);
     int Zh_bin = std::stoi(argv[6]);
-
-    // Check number of arguments is correct
-    if(argc!=7) {std::cout<<"Incorrect number of argument!"<<std::endl; return 1;}
 
     double Q2_min = Q2_limits[Q2_bin  ];
     double Q2_max = Q2_limits[Q2_bin+1];
@@ -69,7 +69,7 @@ int main(int argc, char* argv[])
 
     // DELETE LATER
     std::cout<<cuts_dat<<std::endl;
-    
+
     // Setting additional data cuts
     for(int i = 0 ; i < sizeof(dat_add_cut)/sizeof(dat_add_cut) ; i++) cuts_dat += dat_add_cut[i];
     

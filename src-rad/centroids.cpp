@@ -11,6 +11,9 @@
 
 int main(int argc, char* argv[])
 {
+    // Check number of arguments is correct
+    if(argc!=6) {std::cout<<"Incorrect number of argument!"<<std::endl; return 1;}
+
     // Target settings
     int dat_target_index = std::stoi(argv[1]);
     int vertex_cut_value  = std::stof(argv[2]);
@@ -27,9 +30,6 @@ int main(int argc, char* argv[])
     double Zh_min = Zh_limits[Zh_bin  ];
     double Zh_max = Zh_limits[Zh_bin+1];
     
-    // Check number of arguments is correct
-    if(argc!=6) {std::cout<<"Incorrect number of argument!"<<std::endl; return 1;}
-
     // Open the simulations and data
     TFile* fdat = new TFile((dat_dir+dat_targets[dat_target_index]+dat_ext).c_str(),"READ");
 

@@ -11,6 +11,9 @@
 
 int main(int argc, char* argv[])
 {
+    // Check number of arguments is correct
+    if(argc!=6) {std::cout<<"Incorrect number of argument!"<<std::endl; return 1;}
+
     // Target settings
     int dat_target_index = std::stoi(argv[1]);
     int vertex_cut_value = std::stof(argv[2]);
@@ -19,10 +22,7 @@ int main(int argc, char* argv[])
     int Q2_bin = std::stoi(argv[3]);
     int Nu_bin = std::stoi(argv[4]);
     int Zh_bin = std::stoi(argv[5]);
-
-    // Check number of arguments is correct
-    if(argc!=6) {std::cout<<"Incorrect number of argument!"<<std::endl; return 1;}
-
+    
     // Create file that will contain the tntuple and the fits
     std::string fit_file_name = rad_result_dir+"newphihist"+dat_targets[dat_target_index]+"_VC"+std::to_string(vertex_cut_value)+"_"+
                                 std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+".root";
