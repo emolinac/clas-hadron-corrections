@@ -119,10 +119,14 @@ int main(int argc, char* argv[])
     fittuple->Write();
     gROOT->cd();
 
+    // Delete the TNtuples
+    delete fittuple;
+    delete centroids;
+    
     // Close the TFiles!
-    foutput->Close();
     fphi->Close();
     fcentroids->Close();
+    foutput->Close();
 
     return 1;
 }
