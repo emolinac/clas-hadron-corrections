@@ -105,6 +105,9 @@ int main(int argc, char* argv[])
             double pt_centroid  = hpt->GetMean();
             double phi_centroid = hphi->GetMean();
             
+            // DELETE LATER
+            std::cout<<q2_centroid<<"  "<<xb_centroid<<"  "<<zh_centroid<<"  "<<pt_centroid<<"  "<<phi_centroid<<std::endl;
+
             // Fill the tuples
             centroids_data->Fill(q2_centroid, xb_centroid, zh_centroid, pt_centroid, phi_centroid, Q2_bin, Nu_bin, Zh_bin, Pt2_bin, Phi_bin);
 
