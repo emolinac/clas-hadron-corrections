@@ -111,6 +111,9 @@ int main(int argc, char* argv[])
         double Pt2_bin_max = delta_Pt2 * (Pt2_bin+1);
         TCut loop_cut = Form("Pt2>%f&&Pt2<%f",Pt2_bin_min,Pt2_bin_max);
 
+        // DELETE LATER
+        std::cout<<loop_cut<<std::endl;
+        
         // Fill the histos and skip the loop if the bin is empty
         ntuple_dat->Project("hdat","PhiPQ",loop_cut);
         if(empty_histo(hdat)==1){hdat->Reset();continue;}
@@ -149,6 +152,6 @@ int main(int argc, char* argv[])
     fsim->Close();
     fdat->Close();
     fresult->Close();
-    
+
     return 1;
 }
