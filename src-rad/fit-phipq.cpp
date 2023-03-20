@@ -60,6 +60,9 @@ int main(int argc, char* argv[])
     // Define the tuple that will contain the info obtained from the fits
     TNtuple* fittuple = new TNtuple("AAcAcc_data", "AAcAcc_data", "Q2:Xb:Zh:Pt:A:AErr:Ac:AcErr:Acc:AccErr:ChiSQ");
 
+    // Associate the TNuple with the output directory
+    fittuple->SetDirectory(foutput);
+    
     // Start the fits
     for(int Pt2_bin = 0 ; Pt2_bin < N_Pt2 ; Pt2_bin++)
     {   
@@ -119,10 +122,11 @@ int main(int argc, char* argv[])
     fittuple->Write();
     gROOT->cd();
 
-    // Delete the TNtuples
-    delete fittuple;
-    delete centroids;
-    
+
+    //// Delete the TNtuples
+    //delete fittuple;
+    //delete centroids;
+
     // Close the TFiles!
     fphi->Close();
     fcentroids->Close();
