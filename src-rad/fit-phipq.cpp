@@ -42,7 +42,7 @@ int main(int argc, char* argv[])
 
     // Obtain the tuple that contains the centroids
     float Q2_centroid, Xb_centroid, Zh_centroid, Pt_centroid, Phi_centroid, Q2_centroid_bin, Xb_centroid_bin, Zh_centroid_bin, Pt_centroid_bin, Phi_centroid_bin;
-    TNtuple* centroids = (TNtuple*) fphi->Get("centroids_data");
+    TNtuple* centroids = (TNtuple*) fcentroids->Get("centroids_data");
     centroids->SetBranchAddress("Q2"     , &Q2_centroid     );
     centroids->SetBranchAddress("Xb"     , &Xb_centroid     );
     centroids->SetBranchAddress("Zh"     , &Zh_centroid     );
