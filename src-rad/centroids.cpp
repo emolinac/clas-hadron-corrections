@@ -88,8 +88,14 @@ int main(int argc, char* argv[])
             // Stablish the Pt2 cut
             double Pt2_bin_min = delta_Pt2 *  Pt2_bin;
             double Pt2_bin_max = delta_Pt2 * (Pt2_bin+1);
-            TCut loop_cut = Form("Pt2>%f&&Pt2<%f",Pt2_bin_min,Pt2_bin_max);
+            double Phi_bin_min = Phi_min + delta_Phi *  Phi_bin;
+            double Phi_bin_max = Phi_min + delta_Phi * (Phi_bin+1);
+            
+            TCut loop_cut = Form("Pt2>%f&&Pt2<%f&&PhiPQ>%f&&PhiPQ<%f",Pt2_bin_min,Pt2_bin_max,Phi_bin_min,Phi_bin_max);
 
+            //DELETE THIS
+            std::cout<<loop_cut<<std::endl;
+            
             // Fill the histos and skip the loop if the bin is empty
             ntuple_dat->Project("hq2" ,"Q2"               ,loop_cut);
             if(empty_histo(hq2)==1){hq2->Reset();continue;}
