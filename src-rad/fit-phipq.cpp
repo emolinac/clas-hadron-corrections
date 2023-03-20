@@ -103,7 +103,7 @@ int main(int argc, char* argv[])
         
                     // Write the histogram with the fit
                     foutput->cd();
-                    h->Write((const char*) Form("PhiDist Q2=%.3f Xb=%.3f Zh=%.3f Pt2=%.3f", Q2_centroid, Xb_centroid, Zh_centroid, Pt_centroid));
+                    h->Write((const char*) Form("PhiDist Q2=%.3f Xb=%.3f Zh=%.3f Pt=%.3f", Q2_centroid, Xb_centroid, Zh_centroid, Pt_centroid));
                     gROOT->cd();
             
                     // Write the entry in the TNtuple
