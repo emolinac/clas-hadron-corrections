@@ -27,6 +27,9 @@ int main(int argc, char* argv[])
     double Zh_min = Zh_limits[Zh_bin  ];
     double Zh_max = Zh_limits[Zh_bin+1];
     
+    // Check number of arguments is correct
+    if(argc!=6) {std::cout<<"Incorrect number of argument!"<<std::endl; return 1;}
+
     // Open the simulations and data
     TFile* fdat = new TFile((dat_dir+dat_targets[dat_target_index]+dat_ext).c_str(),"READ");
 
@@ -56,6 +59,9 @@ int main(int argc, char* argv[])
     TCut VZ_cut = Form("VC_TM==%i",vertex_cut_value);
     
     TCut cuts_dat = Q2_cut&&Nu_cut&&Zh_cut&&VZ_cut;
+    
+    // DELETE LATER
+    std::cout<<cuts_dat<<std::endl;
     
     // Setting additional data cuts
     for(int i = 0 ; i < sizeof(dat_add_cut)/sizeof(dat_add_cut) ; i++) cuts_dat += dat_add_cut[i];

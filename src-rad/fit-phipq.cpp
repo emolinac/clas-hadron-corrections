@@ -20,6 +20,9 @@ int main(int argc, char* argv[])
     int Nu_bin = std::stoi(argv[4]);
     int Zh_bin = std::stoi(argv[5]);
 
+    // Check number of arguments is correct
+    if(argc!=6) {std::cout<<"Incorrect number of argument!"<<std::endl; return 1;}
+
     // Create file that will contain the tntuple and the fits
     std::string fit_file_name = rad_result_dir+"newphihist"+dat_targets[dat_target_index]+"_VC"+std::to_string(vertex_cut_value)+"_"+
                                 std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+".root";
@@ -92,6 +95,8 @@ int main(int argc, char* argv[])
                     centroids->GetEntry(entry);
                     if(Q2_bin==Q2_centroid_bin&&Nu_bin==Xb_centroid_bin&&Zh_bin==Zh_centroid_bin&&Pt2_bin==Pt_centroid_bin)
                     {
+                        // DELETE LATER
+                        std::cout<<"A="<<A<<"  Ac="<<Ac<<"   Acc="<<Acc<<std::endl;
                         // Write the histogram with the fit
                         foutput->cd();
                         h->Write((const char*) Form("PhiDist Q2=%.3f Xb=%.3f Zh=%.3f Pt2=%.3f", Q2_centroid, Xb_centroid, Zh_centroid, Pt_centroid));

@@ -21,6 +21,9 @@ int main(int argc, char* argv[])
     int Nu_bin = std::stoi(argv[5]);
     int Zh_bin = std::stoi(argv[6]);
 
+    // Check number of arguments is correct
+    if(argc!=7) {std::cout<<"Incorrect number of argument!"<<std::endl; return 1;}
+
     double Q2_min = Q2_limits[Q2_bin  ];
     double Q2_max = Q2_limits[Q2_bin+1];
     double Nu_min = Nu_limits[Nu_bin  ];
@@ -64,6 +67,9 @@ int main(int argc, char* argv[])
     TCut cuts_thr = Q2_cut&&Nu_cut&&Zh_cut;
     TCut cuts_rec = Q2_cut&&Nu_cut&&Zh_cut;
 
+    // DELETE LATER
+    std::cout<<cuts_dat<<std::endl;
+    
     // Setting additional data cuts
     for(int i = 0 ; i < sizeof(dat_add_cut)/sizeof(dat_add_cut) ; i++) cuts_dat += dat_add_cut[i];
     
