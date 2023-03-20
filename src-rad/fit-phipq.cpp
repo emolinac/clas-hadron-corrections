@@ -62,7 +62,7 @@ int main(int argc, char* argv[])
 
     // Associate the TNuple with the output directory
     fittuple->SetDirectory(foutput);
-    
+
     // Start the fits
     for(int Pt2_bin = 0 ; Pt2_bin < N_Pt2 ; Pt2_bin++)
     {   
@@ -121,11 +121,6 @@ int main(int argc, char* argv[])
     foutput->cd();
     fittuple->Write();
     gROOT->cd();
-
-
-    //// Delete the TNtuples
-    //delete fittuple;
-    //delete centroids;
 
     // Close the TFiles!
     fphi->Close();
