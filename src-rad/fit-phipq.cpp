@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
     centroids->SetBranchAddress("Q2_bin" , &Q2_centroid_bin );
     centroids->SetBranchAddress("Xb_bin" , &Xb_centroid_bin );
     centroids->SetBranchAddress("Zh_bin" , &Zh_centroid_bin );
-    centroids->SetBranchAddress("Pt_bin" , &Pt_centroid_bin );
+    centroids->SetBranchAddress("Pt2_bin", &Pt_centroid_bin );
     centroids->SetBranchAddress("Phi_bin", &Phi_centroid_bin);
 
     // Define the fitting function
