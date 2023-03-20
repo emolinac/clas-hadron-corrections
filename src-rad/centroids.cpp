@@ -117,6 +117,11 @@ int main(int argc, char* argv[])
         }
     }
 
+    //Store the TNtuple
+    fresult->cd();
+    centroids_data->Write();
+    gROOT->cd();
+
     // Close TFiles
     fresult->Close();
     fdat->Close();

@@ -111,8 +111,14 @@ int main(int argc, char* argv[])
         }
     }
     
+    //Store the TNtuple
     foutput->cd();
     rcfactors_tuple->Write();
+    gROOT->cd();
 
+    // Close the TFiles
+    foutput->Close();
+    fcentroids->Close();
+    
     return 1;
 }
