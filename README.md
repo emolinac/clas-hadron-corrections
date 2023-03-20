@@ -13,5 +13,5 @@ This software intends to have a complete set of corrections to hadronic data. It
 
 ## Dependence between the processes
 - *acceptance* and *centroids* are independent between them and with respect to the other processes.
-- *fit-phipq* depends on *acceptance*
+- *fit-phipq* depends on *acceptance* and *centroids*
 - *get-rc* depends on *fit-phipq* and *centroids*

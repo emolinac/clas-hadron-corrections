@@ -64,47 +64,45 @@ int main(int argc, char* argv[])
     TH1F* h;
     for(int Pt2_bin = 0 ; Pt2_bin < N_Pt2 ; Pt2_bin++)
     {
-        for(int Phi_bin = 0 ; Phi_bin < N_Phi ; Phi_bin++)
+        // Obtain the acceptance corrected Phi histo
+        h = (TH1F*) fphi->Get((histo_corr+targets[vertex_cut_value-1][dat_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
+        
+        // Check the minimum number of non-empty bins to perform fit
+        int not_empty_bins = get_filled_bins(h);
+        
+        // Apply condition of minimum number of bins
+        if(not_empty_bins<4) continue;
+        
+        // Fit the plot
+        h->Fit(fit_func, "q");
+        
+        // Get and store the variables of the fit
+        double ChiSQ  = fit_func->GetChisquare();
+        double A      = fit_func->GetParameter(0);
+        double AErr   = fit_func->GetParError(0);
+        double Ac     = fit_func->GetParameter(1);
+        double AcErr  = fit_func->GetParError(1);
+        double Acc    = fit_func->GetParameter(2);
+        double AccErr = fit_func->GetParError(2);
+        double ndf    = fit_func->GetNDF();
+        
+        if(ndf!=0)
         {
-            // Obtain the acceptance corrected Phi histo
-            h = (TH1F*) fphi->Get((histo_corr+targets[vertex_cut_value-1][dat_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
-
-            // Check the minimum number of non-empty bins to perform fit
-            int not_empty_bins = get_filled_bins(h);
-
-            // Apply condition of minimum number of bins
-            if(not_empty_bins<4) continue;
-
-            // Fit the plot
-            h->Fit(fit_func, "q");
-
-            // Get and store the variables of the fit
-            double ChiSQ  = fit_func->GetChisquare();
-            double A      = fit_func->GetParameter(0);
-            double AErr   = fit_func->GetParError(0);
-            double Ac     = fit_func->GetParameter(1);
-            double AcErr  = fit_func->GetParError(1);
-            double Acc    = fit_func->GetParameter(2);
-            double AccErr = fit_func->GetParError(2);
-            double ndf    = fit_func->GetNDF();
-
-            if(ndf!=0)
+            for(int entry = 0 ; entry < centroids->GetEntries() ; entry++)
             {
-                for(int entry = 0 ; entry < centroids->GetEntries() ; entry++)
+                centroids->GetEntry(entry);
+                if(Q2_bin==Q2_centroid_bin&&Nu_bin==Xb_centroid_bin&&Zh_bin==Zh_centroid_bin&&Pt2_bin==Pt_centroid_bin)
                 {
-                    centroids->GetEntry(entry);
-                    if(Q2_bin==Q2_centroid_bin&&Nu_bin==Xb_centroid_bin&&Zh_bin==Zh_centroid_bin&&Pt2_bin==Pt_centroid_bin)
-                    {
-                        // DELETE LATER
-                        std::cout<<"A="<<A<<"  Ac="<<Ac<<"   Acc="<<Acc<<std::endl;
-                        // Write the histogram with the fit
-                        foutput->cd();
-                        h->Write((const char*) Form("PhiDist Q2=%.3f Xb=%.3f Zh=%.3f Pt2=%.3f", Q2_centroid, Xb_centroid, Zh_centroid, Pt_centroid));
-                        gROOT->cd();
-                
-                        // Write the entry in the TNtuple
-                        fittuple->Fill(Q2_centroid, Xb_centroid, Zh_centroid, Pt_centroid, A, AErr, Ac, AcErr, Acc, AccErr, ChiSQ);
-                    }
+                    // DELETE LATER
+                    std::cout<<"A="<<A<<"  Ac="<<Ac<<"   Acc="<<Acc<<std::endl;
+        
+                    // Write the histogram with the fit
+                    foutput->cd();
+                    h->Write((const char*) Form("PhiDist Q2=%.3f Xb=%.3f Zh=%.3f Pt2=%.3f", Q2_centroid, Xb_centroid, Zh_centroid, Pt_centroid));
+                    gROOT->cd();
+            
+                    // Write the entry in the TNtuple
+                    fittuple->Fill(Q2_centroid, Xb_centroid, Zh_centroid, Pt_centroid, A, AErr, Ac, AcErr, Acc, AccErr, ChiSQ);
                 }
             }
         }
