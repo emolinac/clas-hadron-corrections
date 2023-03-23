@@ -3,7 +3,7 @@
 
 #include "TROOT.h"
 
-std::string newphihist_targ;
+extern std::string newphihist_targ;
 
 class THapradConfig;
 class TKinematicalVariables;
