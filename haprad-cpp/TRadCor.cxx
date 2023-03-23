@@ -80,73 +80,6 @@ void TRadCor::SetPolarization(Int_t type)
     fConfig->SetPolarization(type);
 }
 
-
-
-//void TRadCor::CalculateRCFactor(Double_t E, Double_t x, Double_t Q2,
-//                                Double_t z, Double_t p_t, Double_t phi,
-//                                Double_t maxMx2, Double_t targProp)
-//{
-//    // Calculate, without returning it, the radiative correction factor for
-//    // the given parameters. You can use then one of the three methods:
-//    // GetFactor1, GetFactor2 and GetFactor3 to get the value you want.
-//    //
-//    // The E parameter is the energy of the beam, the x, Q2, z, p_t and phi
-//    // are the values of the kinematical variables who describe the cross
-//    // section of hadron electroproduction, and maxMx2 is the maximum amount
-//    // of missing mass.
-//
-//
-//    //Set up the propostion for protons to neutrons Z/A
-//    NAZ = targProp;
-//
-//    fKin    = new TKinematicalVariables(x,-Q2,z,p_t,phi/kRadianDeg,E);
-//    fInv    = new TLorentzInvariants(fConfig,fKin);
-//    fHadKin = new THadronKinematics(fConfig,fKin,fInv);
-//
-//    Double_t S_x = - fKin->Y() / fKin->X();//HH: check if it is correct
-//    //Double_t Mx2 = SQ(kMassProton) + S_x * (1 - fKin->Z()) + fKin->T();//HH: check if T is the correct one, if the evaluate is called correctly
-//    Double_t Nu2 = SQ(S_x/2/kMassProton);
-//    Double_t PlQ2NU = TMath::Sqrt((Nu2 + S_x*x)*(SQ(z)*Nu2 - SQ(kMassPion) - SQ(p_t)));
-//    Double_t t_temp = SQ(kMassPion) - S_x*x + 2*(PlQ2NU - Nu2*z);
-//    Double_t Mx2 = SQ(kMassProton) + S_x * (1 - fKin->Z()) + t_temp;//HH: check if T is the correct one, if the evaluate is called correctly
-//
-//
-//    fKinError = false;
-//    fParametersError = false;
-//
-//    try {
-//        if (Mx2 > maxMx2) {
-//            Initialization();
-//            SPhiH();
-//        }
-//    } catch (TKinematicException& wrongKin) {
-//        fKinError = true;
-//        std::cerr << wrongKin.what() << std::endl;
-//    } catch (ConfigFile::file_not_found) {
-//        fParametersError = true;
-//        std::cout << std::endl
-//                  << "File with parameters not found. Please create a "
-//                  << "file named 'parameters'" << std::endl
-//                  << "in the same directory of your executable "
-//                  << "with this format:" << std::endl
-//                  << std::endl
-//                  << "     parameter1 = value" << std::endl
-//                  << "     parameter2 = value" << std::endl
-//                  << "     parameter2 = value" << std::endl
-//                  << "               ..." << std::endl
-//                  << std::endl
-//                  << "The parameters you should put in the file are:" << std::endl
-//                  << std::endl
-//                  << "    par0, par1, par2, par3, par4," << std::endl
-//                  << "    A1, B1, C1, D1, E1" << std::endl
-//                  << std::endl;
-//    }
-//
-//    delete fKin;
-//    delete fInv;
-//    delete fHadKin;
-//}
-
 void TRadCor::CalculateRCFactor(Double_t E, Double_t x, Double_t Q2,
                                 Double_t z, Double_t p_t, Double_t phi,
                                 Double_t maxMx2, Double_t targProp,
@@ -216,27 +149,27 @@ void TRadCor::CalculateRCFactor(Double_t E, Double_t x, Double_t Q2,
 }
 
 
-Double_t TRadCor::GetRCFactor(Double_t E, Double_t x, Double_t Q2, Double_t z,
-                              Double_t p_t, Double_t phi, Double_t maxMx2, Double_t targProp)
-{
-    // Calculate and return the default radiative correction factor for the
-    // given parameters.
-    //
-    // You can get the same value first calling the CalculateRCFactor(...)
-    // method and then GetFactor2().
-    //
-    // The E parameter is the energy of the beam, the x, Q2, z, p_t and phi
-    // are the values of the kinematical variables who describe the cross
-    // section of hadron electroproduction, and maxMx2 is the maximum amount of
-    // missing mass.
-
-    CalculateRCFactor(E,x,Q2,z,p_t,phi,maxMx2,targProp);
-
-    if (fKinError || fParametersError)
-        return 0;
-    else
-        return (sig_obs + tai[0] + tai[1]) / sigma_born;
-}
+//Double_t TRadCor::GetRCFactor(Double_t E, Double_t x, Double_t Q2, Double_t z,
+//                              Double_t p_t, Double_t phi, Double_t maxMx2, Double_t targProp)
+//{
+//    // Calculate and return the default radiative correction factor for the
+//    // given parameters.
+//    //
+//    // You can get the same value first calling the CalculateRCFactor(...)
+//    // method and then GetFactor2().
+//    //
+//    // The E parameter is the energy of the beam, the x, Q2, z, p_t and phi
+//    // are the values of the kinematical variables who describe the cross
+//    // section of hadron electroproduction, and maxMx2 is the maximum amount of
+//    // missing mass.
+//
+//    CalculateRCFactor(E,x,Q2,z,p_t,phi,maxMx2,targProp);
+//
+//    if (fKinError || fParametersError)
+//        return 0;
+//    else
+//        return (sig_obs + tai[0] + tai[1]) / sigma_born;
+//}
 
 
 
