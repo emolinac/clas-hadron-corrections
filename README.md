@@ -2,7 +2,6 @@
 This software intends to have a complete set of corrections to hadronic data. It is optimized in the sense that couples the acceptance correction with SIDIS radiative correction (HAPRAD). HAPRAD performs acceptance correction; this is highly non-efficient because the acceptance-corrected data is not stored. Therefore, acceptance correction mut be performed and stored in a different process.
 
 ## Prerequisites
-- Download, compile and set the enviromental variables of HAPRAD (https://github.com/orsosa/PiPlusAnalysis)
 - ROOT
 
 ## Setting the software
