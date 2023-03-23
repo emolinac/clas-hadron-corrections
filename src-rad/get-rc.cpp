@@ -17,6 +17,8 @@
 #include "utils.h"
 #include "analysis-constants.h"
 
+std::string newphihist_targ;
+
 int main(int argc, char* argv[])
 {
     // Check number of arguments is correct
@@ -72,6 +74,8 @@ int main(int argc, char* argv[])
     int sysReturn;
 
     TRadCor rc;
+
+    newphihist_targ = targets[vertex_cut_value-1][dat_target_index];
 
     for(int entry = 0 ; entry < centroids->GetEntries() ; entry++)
     {

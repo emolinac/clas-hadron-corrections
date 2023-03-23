@@ -11,10 +11,10 @@ ROOTLDFLAGS := $(shell root-config --ldflags)
 ROOTINCDIR  := $(shell root-config --incdir)
 ROOTLIBS    := $(shell root-config --libs) -lEG
 CERNLIBS    := -lpdflib804 -lmathlib -lphtools -lpacklib -lkernlib -lpawlib
-LDFLAGS     := -O2 ${ROOTLDFLAGS} -lgfortran -Wl,-rpath,${HAPRAD_CPP}/slib
+LDFLAGS     := -O3 ${ROOTLDFLAGS} -lgfortran -Wl,-rpath,./haprad-cpp/slib
 
-INCLUDES_RC  := -I$(ROOTINCDIR) -I$(HAPRAD_CPP) -I${INC}
-LIBS_RC      := -L$(HAPRAD_CPP)/slib -lTRadCor $(ROOTLIBS) -lMathMore -L/opt/cern/pro/lib/ $(CERNLIBS)
+INCLUDES_RC  := -I$(ROOTINCDIR) -I./haprad-cpp -I${INC}
+LIBS_RC      := -L./haprad-cpp/slib -lTRadCor $(ROOTLIBS) -lMathMore -L/opt/cern/pro/lib/ $(CERNLIBS)
 
 all: ${BIN}/acceptance ${BIN}/centroids ${BIN}/fit-phipq ${BIN}/get-rc
 
@@ -34,9 +34,3 @@ ${BIN}/get-rc: ${SRC_RAD}/get-rc.cpp
 
 clean:
 	rm ${BIN}/*
-
-#${BIN}/get-rc:${BIN}/get-rc.o
-#	$(LD) $(LDFLAGS) $^ $(LIBS) -o $@
-
-#${BIN}/get-rc.o:${SRC_RAD}/get-rc.cpp
-#	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
