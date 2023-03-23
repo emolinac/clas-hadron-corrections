@@ -73,6 +73,8 @@ int main(int argc, char* argv[])
 
     TRadCor rc;
 
+    std::string newphihist_targ = targets[vertex_cut_value-1][dat_target_index];
+    
     for(int entry = 0 ; entry < centroids->GetEntries() ; entry++)
     {
         centroids->GetEntry(entry);
@@ -94,7 +96,7 @@ int main(int argc, char* argv[])
 	            continue;
 	        }
 
-	        rc.CalculateRCFactor(5.015, Xb_centroid, Q2_centroid, Zh_centroid, Pt_centroid, Phi_centroid, m, NAZ, targets[vertex_cut_value-1][dat_target_index]);
+	        rc.CalculateRCFactor(5.015, Xb_centroid, Q2_centroid, Zh_centroid, Pt_centroid, Phi_centroid, m, NAZ);
 	        f1 = rc.GetFactor1();
 	        f2 = rc.GetFactor2();
 	        f3 = rc.GetFactor3();

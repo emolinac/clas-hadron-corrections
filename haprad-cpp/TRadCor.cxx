@@ -80,10 +80,13 @@ void TRadCor::SetPolarization(Int_t type)
     fConfig->SetPolarization(type);
 }
 
+//void TRadCor::CalculateRCFactor(Double_t E, Double_t x, Double_t Q2,
+//                                Double_t z, Double_t p_t, Double_t phi,
+//                                Double_t maxMx2, Double_t targProp,
+//                                std::string target_string)
 void TRadCor::CalculateRCFactor(Double_t E, Double_t x, Double_t Q2,
                                 Double_t z, Double_t p_t, Double_t phi,
-                                Double_t maxMx2, Double_t targProp,
-                                std::string target_string)
+                                Double_t maxMx2, Double_t targProp)
 {
     // Calculate, without returning it, the radiative correction factor for
     // the given parameters. You can use then one of the three methods:
@@ -95,7 +98,7 @@ void TRadCor::CalculateRCFactor(Double_t E, Double_t x, Double_t Q2,
     // of missing mass.
 
     //Set the target
-    std::string newphihist_targ = target_string;
+    //std::string newphihist_targ = target_string;
 
     //Set up the propostion for protons to neutrons Z/A
     NAZ = targProp;
