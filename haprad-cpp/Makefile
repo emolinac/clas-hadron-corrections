@@ -22,7 +22,7 @@ ROOTCINT    := rootcint
 
 ifeq ($(findstring Linux,$(OS_NAME)),Linux)
 CXX       := g++  -fPIC 
-CXXFLAGS  += -Wall $(ROOTCFLAGS) $(SET_DEBUG) \
+CXXFLAGS  += -Wall $(ROOTCFLAGS) $(SET_DEBUG) #\
     ./configure--enable-shared_dependencies
 endif
 
