@@ -13,29 +13,31 @@ Q2_bin=0
 Nu_bin=1
 Zh_bin=2
 
-mother_dir=$(PWD)
+mother_dir=$(pwd)
 
 # Clean and compile HAPRAD
-cd ${mother_dir}/haprad-cpp
-make clean
-make
+#cd ${mother_dir}/haprad-cpp
+#make clean
+#make
 
 # Clean and compile corrections software
-cd ${mother_dir}
-make clean
-make
+#cd ${mother_dir}
+#make clean
+#make
 
 echo "RUNNING ACCEPTANCE"
+cd ${mother_dir}/bin
+echo ${mother_dir}/bin
 
-./bin/acceptance ${simu_target} ${data_target} ${vertex_cut} ${Q2_bin} ${Nu_bin} ${Zh_bin}
+./acceptance ${simu_target} ${data_target} ${vertex_cut} ${Q2_bin} ${Nu_bin} ${Zh_bin}
 
 echo "RUNNING CENTROIDS"
 
-./bin/centroids ${data_target} ${vertex_cut} ${Q2_bin} ${Nu_bin} ${Zh_bin}
+./centroids ${data_target} ${vertex_cut} ${Q2_bin} ${Nu_bin} ${Zh_bin}
 
 echo "RUNNING FIT PHIPQ"
 
-./bin/fit-phipq ${data_target} ${vertex_cut} ${Q2_bin} ${Nu_bin} ${Zh_bin}
+./fit-phipq ${data_target} ${vertex_cut} ${Q2_bin} ${Nu_bin} ${Zh_bin}
 
 echo "finalizing"
 cp ${mother_dir}/src-rad/pi_n_maid.dat ${mother_dir}/bin/
