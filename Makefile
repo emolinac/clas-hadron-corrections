@@ -11,7 +11,7 @@ ROOTLDFLAGS := $(shell root-config --ldflags)
 ROOTINCDIR  := $(shell root-config --incdir)
 ROOTLIBS    := $(shell root-config --libs) -lEG
 CERNLIBS    := -lpdflib804 -lmathlib -lphtools -lpacklib -lkernlib -lpawlib
-LDFLAGS     := -O2 ${ROOTLDFLAGS} -lgfortran -Wl,-rpath,./haprad-cpp/slib
+LDFLAGS     := -O3 ${ROOTLDFLAGS} -lgfortran -Wl,-rpath,./haprad-cpp/slib
 
 INCLUDES_RC  := -I$(ROOTINCDIR) -I./haprad-cpp -I${INC}
 LIBS_RC      := -L./haprad-cpp/slib -lTRadCor $(ROOTLIBS) -lMathMore -L/opt/cern/pro/lib/ $(CERNLIBS)

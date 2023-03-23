@@ -15,8 +15,8 @@ public:
     TRadCor();
     ~TRadCor();
 
-    void        CalculateRCFactor(Double_t E, Double_t x, Double_t Q2,
-                                  Double_t z, Double_t p_t, Double_t phi, Double_t maxMx2, Double_t targProp);
+    //void        CalculateRCFactor(Double_t E, Double_t x, Double_t Q2,
+    //                              Double_t z, Double_t p_t, Double_t phi, Double_t maxMx2, Double_t targProp);
     void        CalculateRCFactor(Double_t E, Double_t x, Double_t Q2,
                                   Double_t z, Double_t p_t, Double_t phi, Double_t maxMx2, Double_t targProp,
                                   std::string target_string);
