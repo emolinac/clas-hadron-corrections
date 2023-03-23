@@ -95,7 +95,7 @@ void TRadCor::CalculateRCFactor(Double_t E, Double_t x, Double_t Q2,
     // of missing mass.
 
     //Set the target
-    newphihist_targ = target_string;
+    std::string newphihist_targ = target_string;
 
     //Set up the propostion for protons to neutrons Z/A
     NAZ = targProp;
@@ -147,31 +147,6 @@ void TRadCor::CalculateRCFactor(Double_t E, Double_t x, Double_t Q2,
     delete fInv;
     delete fHadKin;
 }
-
-
-//Double_t TRadCor::GetRCFactor(Double_t E, Double_t x, Double_t Q2, Double_t z,
-//                              Double_t p_t, Double_t phi, Double_t maxMx2, Double_t targProp)
-//{
-//    // Calculate and return the default radiative correction factor for the
-//    // given parameters.
-//    //
-//    // You can get the same value first calling the CalculateRCFactor(...)
-//    // method and then GetFactor2().
-//    //
-//    // The E parameter is the energy of the beam, the x, Q2, z, p_t and phi
-//    // are the values of the kinematical variables who describe the cross
-//    // section of hadron electroproduction, and maxMx2 is the maximum amount of
-//    // missing mass.
-//
-//    CalculateRCFactor(E,x,Q2,z,p_t,phi,maxMx2,targProp);
-//
-//    if (fKinError || fParametersError)
-//        return 0;
-//    else
-//        return (sig_obs + tai[0] + tai[1]) / sigma_born;
-//}
-
-
 
 Double_t TRadCor::GetFactor1(void)
 {
