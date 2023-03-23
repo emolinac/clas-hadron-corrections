@@ -3,7 +3,18 @@ This software intends to have a complete set of corrections to hadronic data. It
 
 ## Prerequisites
 - Download, compile and set the enviromental variables of HAPRAD (https://github.com/orsosa/PiPlusAnalysis)
-- ROOT version < 6.20 (check!)
+- ROOT
+
+## Setting the software
+1. Run the make-software.sh code:
+```
+bash make-software.sh
+```
+2. Add the slib path of HAPRAD to the env. variable LD_LIBRARY_PATH located in your *.bashrc* script, like this:
+```
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:"other_paths_already_set":"path_to_clas-hadron-corrections/haprad-cpp/slib"
+```
+3. Source the .bashrc file 
 
 ## How the software works
 1. Perform acceptance correction and store the corrected data, as phipq distributions, alongside the uncorrected data and the acceptance factors.
