@@ -3,6 +3,8 @@
 
 #include "TROOT.h"
 
+std::string newphihist_targ;
+
 class THapradConfig;
 class TKinematicalVariables;
 class TLorentzInvariants;
@@ -40,8 +42,6 @@ public:
     const TKinematicalVariables*    GetKinematicalVariables(void) const { return fKin; };
     const TLorentzInvariants*       GetLorentzInvariants(void) const { return fInv; };
     const THadronKinematics*        GetHadronKinematics(void) const { return fHadKin; };
-
-    std::string newphihist_targ;
 
 private:
     void        Initialization(void);
