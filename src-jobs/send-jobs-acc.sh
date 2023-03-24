@@ -11,6 +11,7 @@ errout_check(){
 }
 
 # Store the mother directory
+cd ..
 main_dir=$(pwd)
 
 # Check if err and output dirs are present
@@ -27,6 +28,6 @@ Nu_bin=1
 Zh_bin=2
 
 sbatch --job-name=acc_${simu_target}${data_target}${vertex_cut} \
-       --error=./err/acc-${simu_target}${data_target}${vertex_cut}_${Q2_bin}${Nu_bin}${Zh_bin} \
-       --output=./out/acc-${simu_target}${data_target}${vertex_cut}_${Q2_bin}${Nu_bin}${Zh_bin} \
+       --error=${main_dir}/err/acc-${simu_target}${data_target}${vertex_cut}_${Q2_bin}${Nu_bin}${Zh_bin} \
+       --output=${main_dir}/out/acc-${simu_target}${data_target}${vertex_cut}_${Q2_bin}${Nu_bin}${Zh_bin} \
        ./job-acc.sh ${simu_target} ${data_target} ${vertex_cut} ${Q2_bin} ${Nu_bin} ${Zh_bin}
