@@ -14,6 +14,9 @@ errout_check(){
 cd ..
 main_dir=$(pwd)
 
+# Return to job directory
+cd ./src-jobs
+
 # Check if err and output dirs are present
 errout_check
 
