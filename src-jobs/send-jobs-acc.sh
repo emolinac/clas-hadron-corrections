@@ -22,7 +22,11 @@ data_target=1   # 0->C, 1->Fe, 2->Pb
 vertex_cut=2    # 1->liquid, 2->solid
 
 # Send jobs
+Q2_bin=0
+Nu_bin=1
+Zh_bin=2
+
 sbatch --job-name=acc_${simu_target}${data_target}${vertex_cut} \
-       --error=./err/${simu_target}${data_target}${vertex_cut}_${SLURM_JOB_ID} \
-       --output=./out/${simu_target}${data_target}${vertex_cut}_${SLURM_JOB_ID} \
-       ./src-jobs/job-acc.sh ${simu_target} ${data_target} ${vertex_cut} 0 1 2 
+       --error=./err/acc-${simu_target}${data_target}${vertex_cut}_${Q2_bin}${Nu_bin}${Zh_bin} \
+       --output=./out/acc-${simu_target}${data_target}${vertex_cut}_${Q2_bin}${Nu_bin}${Zh_bin} \
+       ./job-acc.sh ${simu_target} ${data_target} ${vertex_cut} ${Q2_bin} ${Nu_bin} ${Zh_bin}

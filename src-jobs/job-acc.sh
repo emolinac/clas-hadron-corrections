@@ -14,4 +14,6 @@ Zh_bin=${6}
 
 echo "Working on directory " $(pwd)
 
-#./bin/acceptance ${simu_target} ${data_target} ${vertex_cut} ${Q2_bin} ${Nu_bin} ${Zh_bin}
+cd ../bin
+
+./bin/acceptance ${simu_target} ${data_target} ${vertex_cut} ${Q2_bin} ${Nu_bin} ${Zh_bin}
