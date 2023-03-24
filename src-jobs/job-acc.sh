@@ -16,4 +16,4 @@ echo "Working on directory " $(pwd)
 
 cd ../bin
 
-./bin/acceptance ${simu_target} ${data_target} ${vertex_cut} ${Q2_bin} ${Nu_bin} ${Zh_bin}
+./acceptance ${simu_target} ${data_target} ${vertex_cut} ${Q2_bin} ${Nu_bin} ${Zh_bin}
