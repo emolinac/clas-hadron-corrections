@@ -40,6 +40,8 @@ int main(int argc, char* argv[])
                                       std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+".root";
     TFile* fcentroids = new TFile(centroids_file_name.c_str());
 
+    if(!fphi->IsOpen()||!fcentroids->IsOpen()){std::cout<<"ERROR! Files were not opened!"<<std::endl; return 1;}
+
     // Obtain the tuple that contains the centroids
     float Q2_centroid, Xb_centroid, Zh_centroid, Pt_centroid, Phi_centroid, Q2_centroid_bin, Xb_centroid_bin, Zh_centroid_bin, Pt_centroid_bin, Phi_centroid_bin;
     TNtuple* centroids = (TNtuple*) fcentroids->Get("centroids_data");

@@ -35,12 +35,8 @@ int main(int argc, char* argv[])
     TFile* fsim = new TFile((sim_dir+sim_targets[sim_target_index]+sim_ext).c_str(),"READ");
     TFile* fdat = new TFile((dat_dir+dat_targets[dat_target_index]+dat_ext).c_str(),"READ");
 
-    if(!fsim->IsOpen()||!fdat->IsOpen())
-    {
-        std::cout<<"ERROR! Files were not opened!"<<std::endl;
-        return 1;
-    }
-    
+    if(!fsim->IsOpen()||!fdat->IsOpen()){std::cout<<"ERROR! Files were not opened!"<<std::endl; return 1;}
+
     // Open create results folder
     std::string output_file_name = acc_result_dir+"acc"+dat_targets[dat_target_index]+"_VC"+std::to_string(vertex_cut_value)+"_"+
                                    std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+".root";
@@ -52,11 +48,7 @@ int main(int argc, char* argv[])
     TNtuple* ntuple_rec = (TNtuple*) fsim->Get(ntuple_rec_name);
     TNtuple* ntuple_dat = (TNtuple*) fdat->Get(ntuple_dat_name);
     
-    if(ntuple_thr==NULL||ntuple_rec==NULL||ntuple_dat==NULL)
-    {
-        std::cout<<"ERROR! One of the tuples could not be loaded!"<<std::endl;
-        return 1;
-    }
+    if(ntuple_thr==NULL||ntuple_rec==NULL||ntuple_dat==NULL){std::cout<<"ERROR! One of the tuples could not be loaded!"<<std::endl; return 1;}
 
     // Setting the base cuts
     std::cout<<"The bin selected was:"<<std::endl;

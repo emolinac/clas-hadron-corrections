@@ -33,6 +33,8 @@ int main(int argc, char* argv[])
     // Open the simulations and data
     TFile* fdat = new TFile((dat_dir+dat_targets[dat_target_index]+dat_ext).c_str(),"READ");
 
+    if(!fdat->IsOpen()){std::cout<<"ERROR! File was not opened!"<<std::endl; return 1;}
+    
     // Open create results folder
     std::string output_file_name = rad_result_dir+"centroids"+dat_targets[dat_target_index]+"_VC"+std::to_string(vertex_cut_value)+"_"+
                                    std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+".root";
@@ -78,52 +80,49 @@ int main(int argc, char* argv[])
     TH1F* hxb  = new TH1F("hxb" ,"",150,0.1          ,0.6          );
     TH1F* hzh  = new TH1F("hzh" ,"",150,Zh_min       ,Zh_max       );
     TH1F* hpt  = new TH1F("hpt" ,"",150,sqrt(Pt2_min),sqrt(Pt2_max));
-    TH1F* hphi = new TH1F("hphi","",150,Phi_min      ,Phi_max      );
 
     // Start the centroids process
     for(int Pt2_bin = 0 ; Pt2_bin < N_Pt2 ; Pt2_bin++)
     {
+        // Define the Pt2 cut
+        double Pt2_bin_min = delta_Pt2 *  Pt2_bin;
+        double Pt2_bin_max = delta_Pt2 * (Pt2_bin+1);
+
+        TCut loop_cut = Form("Pt2>%f&&Pt2<%f",Pt2_bin_min,Pt2_bin_max);
+        std::cout<<loop_cut<<std::endl;
+            
+        // Fill the histos and skip the loop if the bin is empty
+        ntuple_dat->Project("hq2" ,"Q2"               ,loop_cut);
+        if(empty_histo(hq2)==1){hq2->Reset();continue;}
+        ntuple_dat->Project("hxb" ,"Q2/2./Nu/0.938272",loop_cut);
+        ntuple_dat->Project("hzh" ,"Zh"               ,loop_cut);
+        ntuple_dat->Project("hpt" ,"TMath::Sqrt(Pt2)" ,loop_cut);
+            
+        // Obtain the centroids
+        double q2_centroid  = hq2->GetMean();            
+        double xb_centroid  = hxb->GetMean();
+        double zh_centroid  = hzh->GetMean();
+        double pt_centroid  = hpt->GetMean();
+            
+        std::cout<<q2_centroid<<"  "<<xb_centroid<<"  "<<zh_centroid<<"  "<<pt_centroid<<std::endl;   
         for(int Phi_bin = 0 ; Phi_bin < N_Phi ; Phi_bin++)
         {
             // Stablish the Pt2 cut
-            double Pt2_bin_min = delta_Pt2 *  Pt2_bin;
-            double Pt2_bin_max = delta_Pt2 * (Pt2_bin+1);
             double Phi_bin_min = Phi_min + delta_Phi *  Phi_bin;
             double Phi_bin_max = Phi_min + delta_Phi * (Phi_bin+1);
             
-            TCut loop_cut = Form("Pt2>%f&&Pt2<%f&&PhiPQ>%f&&PhiPQ<%f",Pt2_bin_min,Pt2_bin_max,Phi_bin_min,Phi_bin_max);
-
-            //DELETE THIS
-            std::cout<<loop_cut<<std::endl;
-            
-            // Fill the histos and skip the loop if the bin is empty
-            ntuple_dat->Project("hq2" ,"Q2"               ,loop_cut);
-            if(empty_histo(hq2)==1){hq2->Reset();continue;}
-            ntuple_dat->Project("hxb" ,"Q2/2./Nu/0.938272",loop_cut);
-            ntuple_dat->Project("hzh" ,"Zh"               ,loop_cut);
-            ntuple_dat->Project("hpt" ,"TMath::Sqrt(Pt2)" ,loop_cut);
-            ntuple_dat->Project("hphi","PhiPQ"            ,loop_cut);
-            
-            // Obtain the centroids
-            double q2_centroid  = hq2->GetMean();            
-            double xb_centroid  = hxb->GetMean();
-            double zh_centroid  = hzh->GetMean();
-            double pt_centroid  = hpt->GetMean();
-            double phi_centroid = hphi->GetMean();
-            
-            // DELETE LATER
-            std::cout<<q2_centroid<<"  "<<xb_centroid<<"  "<<zh_centroid<<"  "<<pt_centroid<<"  "<<phi_centroid<<std::endl;
-
+            // Obtain the centre
+            double phi_centroid = (Phi_bin_max+Phi_bin_min)/2.;
+        
             // Fill the tuples
             centroids_data->Fill(q2_centroid, xb_centroid, zh_centroid, pt_centroid, phi_centroid, Q2_bin, Nu_bin, Zh_bin, Pt2_bin, Phi_bin);
-
-            // Reset histos
-            hq2->Reset();
-            hxb->Reset();
-            hzh->Reset();
-            hpt->Reset();
-            hphi->Reset();
         }
+
+        // Reset histos
+        hq2->Reset();
+        hxb->Reset();
+        hzh->Reset();
+        hpt->Reset();
     }
 
     //Store the TNtuple
