@@ -15,6 +15,11 @@ cd ..
 main_dir=$(pwd)
 
 # Make the sofware
+cd ./haprad-cpp
+make clean
+make
+
+cd ${main_dir}
 make clean
 make
 
@@ -28,7 +33,7 @@ errout_check
 target_names=("DC" "DFe" "DPb" "C" "Fe" "Pb")
 array_pos=0
 data_target=1   # 0->C, 1->Fe, 2->Pb 
-vertex_cut=1    # 1->liquid, 2->solid
+vertex_cut=2    # 1->liquid, 2->solid
 
 if [ ${vertex_cut} -eq 2 ]
 then
