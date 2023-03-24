@@ -34,13 +34,13 @@ int main(int argc, char* argv[])
     int Zh_bin = std::stoi(argv[5]);
 
     // Create file the rad factors will be stored
-    std::string output_file_name = rad_result_dir+"rcfactors"+dat_targets[dat_target_index]+"_VC"+std::to_string(vertex_cut_value)+"_"+
+    std::string output_file_name = rad_result_dir+"rcfactors"+targets[vertex_cut_value-1][dat_target_index]+"_"+
                                    std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+".root";
     TFile* foutput = new TFile(output_file_name.c_str(),"RECREATE");
     gROOT->cd();
 
     // Open the file with the centroids
-    std::string centroids_file_name = rad_result_dir+"centroids"+dat_targets[dat_target_index]+"_VC"+std::to_string(vertex_cut_value)+"_"+
+    std::string centroids_file_name = rad_result_dir+"centroids"+targets[vertex_cut_value-1][dat_target_index]+"_"+
                                       std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+".root";
     TFile* fcentroids = new TFile(centroids_file_name.c_str());
 

@@ -45,7 +45,7 @@ do
 
             echo "Sending job for bin ${Q2_bin} ${Nu_bin} ${Zh_bin}"
              
-            sbatch --job-name=cntr_${data_target}${vertex_cut} \
+            sbatch --job-name=fitphipq_${data_target}${vertex_cut} \
                    --error=${main_dir}/err/fitphipq-${data_target}${vertex_cut}_${Q2_bin}${Nu_bin}${Zh_bin} \
                    --output=${main_dir}/out/fitphipq-${data_target}${vertex_cut}_${Q2_bin}${Nu_bin}${Zh_bin} \
                    ./job-fitphipq.sh ${data_target} ${vertex_cut} ${Q2_bin} ${Nu_bin} ${Zh_bin}

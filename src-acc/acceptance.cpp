@@ -38,7 +38,7 @@ int main(int argc, char* argv[])
     if(!fsim->IsOpen()||!fdat->IsOpen()){std::cout<<"ERROR! Files were not opened!"<<std::endl; return 1;}
 
     // Open create results folder
-    std::string output_file_name = acc_result_dir+"acc"+dat_targets[dat_target_index]+"_VC"+std::to_string(vertex_cut_value)+"_"+
+    std::string output_file_name = acc_result_dir+"acc"+targets[vertex_cut_value-1][dat_target_index]+"_"+
                                    std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+".root";
     TFile* fresult = new TFile(output_file_name.c_str(),"RECREATE");
     gROOT->cd();

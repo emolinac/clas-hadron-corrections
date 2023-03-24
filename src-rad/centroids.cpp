@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
     if(!fdat->IsOpen()){std::cout<<"ERROR! File was not opened!"<<std::endl; return 1;}
     
     // Open create results folder
-    std::string output_file_name = rad_result_dir+"centroids"+dat_targets[dat_target_index]+"_VC"+std::to_string(vertex_cut_value)+"_"+
+    std::string output_file_name = rad_result_dir+"centroids"+targets[vertex_cut_value-1][dat_target_index]+"_"+
                                    std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+".root";
     TFile* fresult = new TFile(output_file_name.c_str(),"RECREATE");
     gROOT->cd();
