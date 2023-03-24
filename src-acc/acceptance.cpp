@@ -35,8 +35,11 @@ int main(int argc, char* argv[])
     TFile* fsim = new TFile((sim_dir+sim_targets[sim_target_index]+sim_ext).c_str(),"READ");
     TFile* fdat = new TFile((dat_dir+dat_targets[dat_target_index]+dat_ext).c_str(),"READ");
 
-    std::cout<<sim_dir+sim_targets[sim_target_index]+sim_ext<<std::endl;
-    std::cout<<dat_dir+dat_targets[dat_target_index]+dat_ext<<std::endl;
+    if(!fsim->IsOpen()||!fdat->IsOpen())
+    {
+        std::cout<<"ERROR! Files were not opened!"<<std::endl;
+        return 1;
+    }
     
     // Open create results folder
     std::string output_file_name = acc_result_dir+"acc"+dat_targets[dat_target_index]+"_VC"+std::to_string(vertex_cut_value)+"_"+

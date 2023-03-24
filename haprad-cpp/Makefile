@@ -15,7 +15,7 @@ ROOTINCDIR  := $(shell $(ROOTCONFIG) --incdir)
 ROOTCINT    := rootcint
 
 #ifeq "$(DEBUG)" ""
-#CXXFLAGS += -O2 -fPIC
+#CXXFLAGS += -O3 -fPIC
 #else
 #CXXFLAGS += -g -fPIC
 #endif
@@ -27,7 +27,7 @@ CXXFLAGS  += -Wall $(ROOTCFLAGS) $(SET_DEBUG) #\
 endif
 
 LD        = g++ -fPIC 
-LDFLAGS   = -O2 $(ROOTLDFLAGS) -lgfortran 
+LDFLAGS   = -O3 $(ROOTLDFLAGS) -lgfortran 
 SOFLAGS   = -Wl,-soname,$(notdir $@) -shared
 
 INCLUDES  := -I$(ROOTINCDIR) -I../include

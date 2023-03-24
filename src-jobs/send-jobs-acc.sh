@@ -14,6 +14,10 @@ errout_check(){
 cd ..
 main_dir=$(pwd)
 
+# Make the sofware
+make clean
+make
+
 # Return to job directory
 cd ./src-jobs
 
@@ -26,11 +30,26 @@ data_target=1   # 0->C, 1->Fe, 2->Pb
 vertex_cut=2    # 1->liquid, 2->solid
 
 # Send jobs
-Q2_bin=0
-Nu_bin=1
-Zh_bin=2
+N_Q2=3
+N_Nu=3
+N_Zh=8
 
-sbatch --job-name=acc_${simu_target}${data_target}${vertex_cut} \
-       --error=${main_dir}/err/acc-${simu_target}${data_target}${vertex_cut}_${Q2_bin}${Nu_bin}${Zh_bin} \
-       --output=${main_dir}/out/acc-${simu_target}${data_target}${vertex_cut}_${Q2_bin}${Nu_bin}${Zh_bin} \
-       ./job-acc.sh ${simu_target} ${data_target} ${vertex_cut} ${Q2_bin} ${Nu_bin} ${Zh_bin}
+for(( i = 0 ; i < ${N_Q2} ; i++ ))
+do
+    for(( j = 0 ; j < ${N_Nu} ; j++ ))
+    do
+        for(( k = 0 ; k < ${N_Zh} ; k++ ))
+        do
+            Q2_bin=${i}
+            Nu_bin=${j}
+            Zh_bin=${k}
+
+            echo "Sending job for bin ${Q2_bin} ${Nu_bin} ${Zh_bin}"
+             
+            sbatch --job-name=acc_${simu_target}${data_target}${vertex_cut} \
+                   --error=${main_dir}/err/acc-${simu_target}${data_target}${vertex_cut}_${Q2_bin}${Nu_bin}${Zh_bin} \
+                   --output=${main_dir}/out/acc-${simu_target}${data_target}${vertex_cut}_${Q2_bin}${Nu_bin}${Zh_bin} \
+                   ./job-acc.sh ${simu_target} ${data_target} ${vertex_cut} ${Q2_bin} ${Nu_bin} ${Zh_bin}
+        done
+    done
+done
