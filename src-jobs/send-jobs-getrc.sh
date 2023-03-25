@@ -24,7 +24,7 @@ make clean
 make
 
 # Copy the MAID data into the bin folder
-cp ./src-rad/pi_n_maid.dat ./bin/
+cp ./haprad-cpp/haprad2/pi_n_maid.dat ./bin/
 
 # Check if err and output dirs are present
 errout_check
