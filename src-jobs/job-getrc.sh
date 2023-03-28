@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --time=02:00:00
+#SBATCH --time=03:30:00
 #SBATCH --mem=2G
 
 data_target=${1}
