@@ -59,7 +59,7 @@ int main(int argc, char* argv[])
     centroids->SetBranchAddress("Phi_bin", &Phi_centroid_bin);
 
     // Create the TNtuple that will contain the rc factors
-    TNtuple *rcfactors_tuple = new TNtuple(ntuple_rc_name,ntuple_rc_name,"rc_factor_1:rc_factor_3:Q2_bin:Nu_bin:Zh_bin:Pt2_bin:Phi_bin"); 
+    TNtuple *rcfactors_tuple = new TNtuple(ntuple_rc_name,ntuple_rc_name,"rc1:rc3:Q2_bin:Nu_bin:Zh_bin:Pt2_bin:Phi_bin"); 
 
     // Target proton to neutron ratio
     double NAZ = 0;
