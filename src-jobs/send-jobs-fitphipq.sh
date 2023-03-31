@@ -15,8 +15,13 @@ cd ..
 main_dir=$(pwd)
 
 # Make the sofware
-make clean
-make
+n_jobs=$(squeue -u emolina | grep -i " R " | wc -l)
+if [ ${n_jobs} = 0 ]
+then
+    echo "No jobs running! Safe to do make."
+    make clean
+    make
+fi
 
 # Return to job directory
 cd ./src-jobs

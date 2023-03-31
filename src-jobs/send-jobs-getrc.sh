@@ -15,13 +15,17 @@ cd ..
 main_dir=$(pwd)
 
 # Make the sofware
-cd ./haprad-cpp
-make clean
-make
-
-cd ${main_dir}
-make clean
-make
+n_jobs=$(squeue -u emolina | grep -i " R " | wc -l)
+if [ ${n_jobs} = 0 ]
+then
+    cd ./haprad-cpp
+    make clean
+    make
+    
+    cd ${main_dir}
+    make clean
+    make
+fi
 
 # Copy the MAID data into the bin folder
 cp ./haprad-cpp/haprad2/pi_n_maid.dat ./bin/
