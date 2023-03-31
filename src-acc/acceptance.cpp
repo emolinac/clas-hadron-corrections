@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
     // Target settings
     int sim_target_index = std::stoi(argv[1]);
     int dat_target_index = std::stoi(argv[2]);
-    int vertex_cut_value  = std::stof(argv[3]);
+    int vertex_cut_value = std::stof(argv[3]);
 
     // Q2, Nu, Zh bin settings
     int Q2_bin = std::stoi(argv[4]);

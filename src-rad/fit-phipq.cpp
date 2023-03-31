@@ -19,7 +19,7 @@ int main(int argc, char* argv[])
     int vertex_cut_value = std::stof(argv[2]);
 
     // Q2, Nu, Zh bin settings
-    int Q2_bin = std::stoi(argv[3]);
+    int Q2_bin = std::stoi(argv[3]); 
     int Nu_bin = std::stoi(argv[4]);
     int Zh_bin = std::stoi(argv[5]);
     
