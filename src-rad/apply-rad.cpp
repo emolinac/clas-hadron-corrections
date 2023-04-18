@@ -20,9 +20,6 @@ int main(int argc, char* argv[])
     std::string acc_file_name = acc_result_dir+"acc"+targets[vertex_cut_value-1][dat_target_index]+".root";
     TFile* frad = new TFile(rad_file_name.c_str());
     TFile* facc = new TFile(acc_file_name.c_str());
-    std::cout<<"Opening "<<acc_file_name<<std::endl;
-    std::cout<<"Opening "<<rad_file_name<<std::endl;
-    std::cout<<"Opened source files"<<std::endl;
 
     // Open the output files
     std::string output1_file_name = rad_result_dir+"fullcorr1"+targets[vertex_cut_value-1][dat_target_index]+".root";
@@ -31,8 +28,6 @@ int main(int argc, char* argv[])
     std::string output2_file_name = rad_result_dir+"fullcorr2"+targets[vertex_cut_value-1][dat_target_index]+".root";
     TFile* fout2 = new TFile(output2_file_name.c_str(),"RECREATE");
     gROOT->cd();
-
-    std::cout<<"Opened out files"<<std::endl;
 
     //  Obtain the rcfactors TNtuple
     float Q2_bin_rad, Nu_bin_rad, Zh_bin_rad, Pt2_bin_rad, Phi_bin_rad, rc1;
@@ -43,8 +38,6 @@ int main(int argc, char* argv[])
     ntuple_rad->SetBranchAddress("Pt2_bin",&Pt2_bin_rad);
     ntuple_rad->SetBranchAddress("Phi_bin",&Phi_bin_rad);
     ntuple_rad->SetBranchAddress("rc1",&rc1);
-
-    std::cout<<"TNtuples obtained"<<std::endl;
 
     // Declare instrumental histo
     TH1F* h;
@@ -59,10 +52,10 @@ int main(int argc, char* argv[])
                 for(int Pt2_bin = 0 ; Pt2_bin < N_Pt2 ; Pt2_bin++)
                 {
                     // Get acceptance corrected PhiPQ and write it
-                    h = (TH1F*) facc->Get((histo_corr+targets[vertex_cut_value-1][dat_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
+                    h = (TH1F*) facc->Get((histo_acc+targets[vertex_cut_value-1][dat_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
                     if(h==NULL) {continue;}
                     fout1->cd();
-                    h->Write((histo_corr+targets[vertex_cut_value-1][dat_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
+                    h->Write((histo_acc+targets[vertex_cut_value-1][dat_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
                     gROOT->cd();
 
                     // Apply the RC factor
@@ -83,14 +76,14 @@ int main(int argc, char* argv[])
 
                     // Write the rad corrected histo
                     fout1->cd();
-                    h->Write((histo_radc+targets[vertex_cut_value-1][dat_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
+                    h->Write((histo_accrc+targets[vertex_cut_value-1][dat_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
                     gROOT->cd();
 
                     // Reset and start the process again
                     h->Reset();
-                    h = (TH1F*) facc->Get((histo_corr+targets[vertex_cut_value-1][dat_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
+                    h = (TH1F*) facc->Get((histo_acc+targets[vertex_cut_value-1][dat_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
                     fout2->cd();
-                    h->Write((histo_corr+targets[vertex_cut_value-1][dat_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
+                    h->Write((histo_acc+targets[vertex_cut_value-1][dat_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
                     gROOT->cd();
                     
                     // Case 2 : There is a positive RC factor. The rest goes to zero
@@ -121,7 +114,7 @@ int main(int argc, char* argv[])
 
                     // Write the rad corrected histo
                     fout2->cd();
-                    h->Write((histo_radc+targets[vertex_cut_value-1][dat_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
+                    h->Write((histo_accrc+targets[vertex_cut_value-1][dat_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
                     gROOT->cd();
                 }
             }

@@ -70,9 +70,9 @@ int main(int argc, char* argv[])
     {   
         // DELETE LATER
         std::cout<<"Working in bin "<<Pt2_bin<<std::endl;
-        std::cout<<"Obtaining histo: "<<(histo_corr+targets[vertex_cut_value-1][dat_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin))<<std::endl;
+        std::cout<<"Obtaining histo: "<<(histo_acc+targets[vertex_cut_value-1][dat_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin))<<std::endl;
         // Obtain the acceptance corrected Phi histo
-        TH1F* h = (TH1F*) fphi->Get((histo_corr+targets[vertex_cut_value-1][dat_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
+        TH1F* h = (TH1F*) fphi->Get((histo_acc+targets[vertex_cut_value-1][dat_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
         
         // Check the minimum number of non-empty bins to perform fit
         int not_empty_bins = get_filled_bins(h);

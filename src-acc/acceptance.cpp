@@ -19,6 +19,8 @@ int main(int argc, char* argv[])
     int dat_target_index = std::stoi(argv[2]);
     int vertex_cut_value = std::stof(argv[3]);
 
+    if(!check_target(sim_target_index, dat_target_index, vertex_cut_value)){std::cout<<"Check your target specs!"<<std::endl; return 1;}
+
     // Q2, Nu, Zh bin settings
     int Q2_bin = std::stoi(argv[4]);
     int Nu_bin = std::stoi(argv[5]);
@@ -32,15 +34,13 @@ int main(int argc, char* argv[])
     double Zh_max = Zh_limits[Zh_bin+1];
     
     // Open the simulations and data
-    TFile* fsim = new TFile((sim_dir+sim_targets[sim_target_index]+sim_ext).c_str(),"READ");
-    TFile* fdat = new TFile((dat_dir+dat_targets[dat_target_index]+dat_ext).c_str(),"READ");
+    TFile* fsim = new TFile(get_sim_name(sim_target_index).c_str(),"READ");
+    TFile* fdat = new TFile(get_dat_name(dat_target_index).c_str(),"READ");
 
     if(!fsim->IsOpen()||!fdat->IsOpen()){std::cout<<"ERROR! Files were not opened!"<<std::endl; return 1;}
 
     // Open create results folder
-    std::string output_file_name = acc_result_dir+"acc"+targets[vertex_cut_value-1][dat_target_index]+"_"+
-                                   std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+".root";
-    TFile* fresult = new TFile(output_file_name.c_str(),"RECREATE");
+    TFile* fresult = new TFile(get_acc_out_name(vertex_cut_value,dat_target_index,Q2_bin,Nu_bin).c_str(),"RECREATE");
     gROOT->cd();
 
     // Obtain the tuples
@@ -64,9 +64,6 @@ int main(int argc, char* argv[])
     TCut cuts_dat = Q2_cut&&Nu_cut&&Zh_cut&&VZ_cut;
     TCut cuts_thr = Q2_cut&&Nu_cut&&Zh_cut;
     TCut cuts_rec = Q2_cut&&Nu_cut&&Zh_cut;
-
-    // DELETE LATER
-    std::cout<<cuts_dat<<std::endl;
 
     // Setting additional data cuts
     for(int i = 0 ; i < sizeof(dat_add_cut)/sizeof(dat_add_cut) ; i++) cuts_dat += dat_add_cut[i];
@@ -95,7 +92,7 @@ int main(int argc, char* argv[])
     TH1F* hrec      = new TH1F("hrec"     ,"",N_Phi,Phi_min,Phi_max);
     TH1F* hthr      = new TH1F("hthr"     ,"",N_Phi,Phi_min,Phi_max);
     TH1F* hacc      = new TH1F("hacc"     ,"",N_Phi,Phi_min,Phi_max);
-    TH1F* hdat_corr = new TH1F("hdat_corr","",N_Phi,Phi_min,Phi_max);
+    TH1F* hacc_corr = new TH1F("hacc_corr","",N_Phi,Phi_min,Phi_max);
 
     hdat->Sumw2();
     hrec->Sumw2();
@@ -109,9 +106,6 @@ int main(int argc, char* argv[])
         double Pt2_bin_max = delta_Pt2 * (Pt2_bin+1);
         TCut loop_cut = Form("Pt2>%f&&Pt2<%f",Pt2_bin_min,Pt2_bin_max);
 
-        // DELETE LATER
-        std::cout<<loop_cut<<std::endl;
-        
         // Fill the histos and skip the loop if the bin is empty
         ntuple_dat->Project("hdat","PhiPQ",loop_cut);
         if(empty_histo(hdat)==1){hdat->Reset();continue;}
@@ -130,20 +124,20 @@ int main(int argc, char* argv[])
         acc_histo_process(hacc);
 
         // Obtain acceptance corrected data
-        hdat_corr->Divide(hdat,hacc,1,1);
+        hacc_corr->Divide(hdat,hacc,1,1);
 
         // Write the histos on the output file
         fresult->cd();
-        hacc->Write((histo_accf+targets[vertex_cut_value-1][dat_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
-        hdat->Write((histo_data+targets[vertex_cut_value-1][dat_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
-        hdat_corr->Write((histo_corr+targets[vertex_cut_value-1][dat_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
+        hacc->Write(get_accf_histo_name(vertex_cut_value,dat_target_index,Q2_bin,Nu_bin,Pt2_bin).c_str());
+        hdat->Write(get_data_histo_name(vertex_cut_value,dat_target_index,Q2_bin,Nu_bin,Pt2_bin).c_str());
+        hacc_corr->Write(get_acccorr_histo_name(vertex_cut_value,dat_target_index,Q2_bin,Nu_bin,Pt2_bin).c_str());
         gROOT->cd();
 
         hdat->Reset();
         hrec->Reset();
         hthr->Reset();
         hacc->Reset();
-        hdat_corr->Reset();        
+        hacc_corr->Reset();        
     }
 
     // Close TFiles

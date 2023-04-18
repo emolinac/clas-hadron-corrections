@@ -105,13 +105,7 @@ int main(int argc, char* argv[])
 	        if(TMath::IsNaN(f1) || f1 == a3) f1 = 0;
 	        if(TMath::IsNaN(f2) || f2 == a3) f2 = 0;
 	        if(TMath::IsNaN(f3) || f3 == a3) f3 = 0;
-	        rcfactors_tuple->Fill(f1,f3,Q2_centroid_bin,Xb_centroid_bin,Zh_centroid_bin,Pt_centroid_bin,Phi_centroid_bin);
-	        std::cout<<"Q2="<<Q2_centroid<<" || Xb="<<Xb_centroid<<" || Zh="<<Zh_centroid<<" || Pt="<<Pt_centroid<<std::endl;
-	        std::cout<<"RC without exc contribution      = "<<f1<<std::endl;
-	        std::cout<<"RC with exc contribution         = "<<f2<<std::endl;
-	        std::cout<<"RC with exc contribution div NAZ = "<<f3<<std::endl;
-	        std::cout<<"________________________________________________________________________________________________"<<std::endl;
-            
+	        rcfactors_tuple->Fill(f1,f3,Q2_centroid_bin,Xb_centroid_bin,Zh_centroid_bin,Pt_centroid_bin,Phi_centroid_bin);            
         }
     }
     

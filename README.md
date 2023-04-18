@@ -1,5 +1,5 @@
 # clas-hadron-corrections
-This software intends to have a complete set of corrections to hadronic data. It is optimized in the sense that couples the acceptance correction with SIDIS radiative correction (HAPRAD). HAPRAD performs acceptance correction; this is highly non-efficient because the acceptance-corrected data is not stored. Therefore, acceptance correction mut be performed and stored in a different process.
+This software intends to have a complete set of corrections to hadronic data. It is optimized in the sense that couples the acceptance correction with SIDIS radiative correction (HAPRAD).
 
 ## Prerequisites
 - ROOT
