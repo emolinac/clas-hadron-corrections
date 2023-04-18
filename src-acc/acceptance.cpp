@@ -128,9 +128,9 @@ int main(int argc, char* argv[])
 
         // Write the histos on the output file
         fresult->cd();
-        hacc->Write(get_accf_histo_name(vertex_cut_value,dat_target_index,Q2_bin,Nu_bin,Pt2_bin).c_str());
-        hdat->Write(get_data_histo_name(vertex_cut_value,dat_target_index,Q2_bin,Nu_bin,Pt2_bin).c_str());
-        hacc_corr->Write(get_acccorr_histo_name(vertex_cut_value,dat_target_index,Q2_bin,Nu_bin,Pt2_bin).c_str());
+        hacc->Write(get_accf_histo_name(vertex_cut_value,dat_target_index,Q2_bin,Nu_bin,Zh_bin,Pt2_bin).c_str());
+        hdat->Write(get_data_histo_name(vertex_cut_value,dat_target_index,Q2_bin,Nu_bin,Zh_bin,Pt2_bin).c_str());
+        hacc_corr->Write(get_acccorr_histo_name(vertex_cut_value,dat_target_index,Q2_bin,Nu_bin,Zh_bin,Pt2_bin).c_str());
         gROOT->cd();
 
         hdat->Reset();
