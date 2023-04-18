@@ -16,7 +16,7 @@ int main(int argc, char* argv[])
 
     // Target settings
     int dat_target_index = std::stoi(argv[1]);
-    int vertex_cut_value  = std::stof(argv[2]);
+    int vertex_cut_value = std::stof(argv[2]);
 
     // Q2, Nu, Zh bin settings
     int Q2_bin = std::stoi(argv[3]);
@@ -30,15 +30,13 @@ int main(int argc, char* argv[])
     double Zh_min = Zh_limits[Zh_bin  ];
     double Zh_max = Zh_limits[Zh_bin+1];
     
-    // Open the simulations and data
-    TFile* fdat = new TFile((dat_dir+dat_targets[dat_target_index]+dat_ext).c_str(),"READ");
+    // Open the data
+    TFile* fdat = new TFile(get_dat_name(dat_target_index).c_str(),"READ");
 
     if(!fdat->IsOpen()){std::cout<<"ERROR! File was not opened!"<<std::endl; return 1;}
     
     // Open create results folder
-    std::string output_file_name = rad_result_dir+"centroids"+targets[vertex_cut_value-1][dat_target_index]+"_"+
-                                   std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+".root";
-    TFile* fresult = new TFile(output_file_name.c_str(),"RECREATE");
+    TFile* fresult = new TFile(get_centroids_out_name(vertex_cut_value,dat_target_index,Q2_bin,Nu_bin,Zh_bin).c_str(),"RECREATE");
     gROOT->cd();
 
     // Obtain the tuples
@@ -47,7 +45,7 @@ int main(int argc, char* argv[])
     if(ntuple_dat==NULL){std::cout<<"ERROR! Data tuple could not be loaded!"<<std::endl; return 1;}
 
     // Create centroid tuples
-    TNtuple* centroids_data = new TNtuple("centroids_data","centroids_data","Q2:Xb:Zh:Pt:Phi:Q2_bin:Xb_bin:Zh_bin:Pt2_bin:Phi_bin");
+    TNtuple* centroids_data = new TNtuple(ntuple_centroids,ntuple_centroids,"Q2:Xb:Zh:Pt:Phi:Q2_bin:Xb_bin:Zh_bin:Pt2_bin:Phi_bin");
 
     // Setting the base cuts
     std::cout<<"The bin selected was:"<<std::endl;
@@ -61,9 +59,6 @@ int main(int argc, char* argv[])
     TCut VZ_cut = Form("VC_TM==%i",vertex_cut_value);
     
     TCut cuts_dat = Q2_cut&&Nu_cut&&Zh_cut&&VZ_cut;
-    
-    // DELETE LATER
-    std::cout<<cuts_dat<<std::endl;
     
     // Setting additional data cuts
     for(int i = 0 ; i < sizeof(dat_add_cut)/sizeof(dat_add_cut) ; i++) cuts_dat += dat_add_cut[i];
@@ -89,7 +84,6 @@ int main(int argc, char* argv[])
         double Pt2_bin_max = delta_Pt2 * (Pt2_bin+1);
 
         TCut loop_cut = Form("Pt2>%f&&Pt2<%f",Pt2_bin_min,Pt2_bin_max);
-        std::cout<<loop_cut<<std::endl;
             
         // Fill the histos and skip the loop if the bin is empty
         ntuple_dat->Project("hq2" ,"Q2"               ,loop_cut);
@@ -103,8 +97,7 @@ int main(int argc, char* argv[])
         double xb_centroid  = hxb->GetMean();
         double zh_centroid  = hzh->GetMean();
         double pt_centroid  = hpt->GetMean();
-            
-        std::cout<<q2_centroid<<"  "<<xb_centroid<<"  "<<zh_centroid<<"  "<<pt_centroid<<std::endl;   
+
         for(int Phi_bin = 0 ; Phi_bin < N_Phi ; Phi_bin++)
         {
             // Stablish the Pt2 cut

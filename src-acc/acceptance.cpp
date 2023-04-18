@@ -40,7 +40,7 @@ int main(int argc, char* argv[])
     if(!fsim->IsOpen()||!fdat->IsOpen()){std::cout<<"ERROR! Files were not opened!"<<std::endl; return 1;}
 
     // Open create results folder
-    TFile* fresult = new TFile(get_acc_out_name(vertex_cut_value,dat_target_index,Q2_bin,Nu_bin).c_str(),"RECREATE");
+    TFile* fresult = new TFile(get_acc_out_name(vertex_cut_value,dat_target_index,Q2_bin,Nu_bin,Zh_bin).c_str(),"RECREATE");
     gROOT->cd();
 
     // Obtain the tuples
