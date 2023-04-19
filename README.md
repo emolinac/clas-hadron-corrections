@@ -1,6 +1,6 @@
 # clas-hadron-corrections
 Software that corrects hadron data in a five-dimensional phase space using ROOT. Currently, the software is hard-coded to work with the following variables: Q2, Nu, Zh, Pt2, and PhiPQ.
-If you need to use this software to fully correct hadron data follow the order shown in the diagram below. However; if you only need acceptance-corrected data it is not necessary to execute the rest of the software beyond *acceptance*.
+If you need to use this software to fully correct hadron data follow the order shown in the diagram below. However; if you only need acceptance-corrected data it is not necessary to execute the rest of the software besides *acceptance*.
 ## Dependence between the processes
 ```mermaid
 graph LR;
@@ -30,7 +30,7 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:"other_paths_already_set":"path_to_clas-
 2. Set the extensions of the data and simulation files.
     1. What is the extension? We use files where the name of the target comes first, the rest is the extension. For instance: *C_data_Npion.root*. The extension is *_data_Npion.root*
 
-## How to use?
+## Usage
 In the folder *src-jobs* you can find the scripts that sends the jobs. To send the jobs use:
 ```
 bash send-jobs-X.sh
@@ -38,5 +38,18 @@ bash send-jobs-X.sh
 Follow these notes to successfully execute this software:
 - Make sure the number of bins in Q2, Nu, and Zh, are the same as those specified in *analysis-constants.h*.
 - Make sure to follow the order/dependence described in the diagram above. For instance, you need all the resulting files from *centroids* to use *get-rc*.
-- Set target and vertex cut according to the options spicified in the scripts.
-    - Note: The target options are shown considering that the data files have both solid-liquid targets results and the simulation files have a separate file for the liquid target results.
+
+### Tutorial to obtain acceptance-corrected data
+Lets say we want the acceptance corrected data for the liquid target results of the Fe runs.
+1. In *send-jobs-acc.sh*, set the following variables:
+```
+# Set target to use!
+simu_target=1   # 0->C, 1->Fe, 2->Pb, 3->D2
+data_target=1   # 0->C, 1->Fe, 2->Pb 
+vertex_cut=1    # 1->liquid, 2->solid
+```
+2. Execute:
+```
+bash send-jobs-acc.sh
+```
+3. A number of N_Q2xN_NuxN_Zh jobs will be sent to obtain the acceptance corrected data for the liquid target results of Fe runs.
