@@ -40,10 +40,9 @@ Follow these notes to successfully execute this software:
 - Make sure to follow the order/dependence described in the diagram above. For instance, you need all the resulting files from *centroids* to use *get-rc*.
 
 ### Tutorial to obtain acceptance-corrected data
-Lets say we want the acceptance corrected data for the liquid target results of the Fe runs.
-1. In *send-jobs-acc.sh*, set the following variables:
+Lets say we want the acceptance-corrected data for the liquid target results of the Fe runs.
+1. In *send-jobs-acc.sh*, set the target variables:
 ```
-# Set target to use!
 simu_target=1   # 0->C, 1->Fe, 2->Pb, 3->D2
 data_target=1   # 0->C, 1->Fe, 2->Pb 
 vertex_cut=1    # 1->liquid, 2->solid
@@ -53,3 +52,40 @@ vertex_cut=1    # 1->liquid, 2->solid
 bash send-jobs-acc.sh
 ```
 3. A number of N_Q2xN_NuxN_Zh jobs will be sent to obtain the acceptance corrected data for the liquid target results of Fe runs.
+
+### Tutorial to obtain fully-corrected data
+For this tutorial we will assumme the acceptance-corrected data is already performed for the liquid target results of the Fe runs.
+1. In *send-jobs-centroids.sh*, set the target variables:
+```
+data_target=1   # 0->C, 1->Fe, 2->Pb 
+vertex_cut=1    # 1->liquid, 2->solid
+```
+2. Execute:
+```
+bash send-jobs-centroids.sh
+```
+3. After the acceptance and centroids results are obtained, make sure to set the target variables in *send-jobs-fitphipq.sh* and execute:
+```
+bash send-jobs-fitphipq.sh
+```
+4. After the fits are performed, go to *output-files-rad* and merge the files containing the fits with the following command:
+```
+hadd newphihist_DFe.root newphihistDFe_*.root
+```
+5. Go to *src-jobs*. Set the target variables in *send-jobs-getrc.sh* and execute:
+```
+bash send-jobs-getrc.sh
+```
+6. Go to *output-files-rad*. Merge the rc factors files with the following command:
+```
+hadd rcfactorsDFe.root rcfactorsDFe_*.root
+```
+7. Go to *output-files-acc*. Merge the acceptance-corrected data files with the following command:
+```
+hadd accDFe.root accDFe_*.root
+```
+8. Go to *bin*. Execute the following command:
+```
+./apply-rad
+```
+9. Congrats! You just obtained fully corrected results for the liquid target of the Fe runs.
