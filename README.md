@@ -21,11 +21,12 @@ bla
 ## Dependence between the processes
 ```mermaid
 graph LR;
+    (data)-->acceptance;
+    (simul)-->acceptance;
+    (data)-->centroids;
     acceptance-->fit-phipq;
     centroids-->fit-phipq;
     centroids-->get-rc;
     fit-phipq-->get-rc;
+    get-rc-->apply-rc;
 ```
-- *acceptance* and *centroids* are independent between them and with respect to the other processes.
-- *fit-phipq* depends on *acceptance* and *centroids*
-- *get-rc* depends on *fit-phipq* and *centroids*
