@@ -12,43 +12,6 @@ int check_target(int sim_target_index , int dat_target_index, int vertex_cut_val
     return 1;
 }
 
-// NAMES
-std::string get_sim_name(int sim_target_index)
-{
-    return sim_dir+sim_targets[sim_target_index]+sim_ext;
-}
-
-std::string get_dat_name(int dat_target_index)
-{
-    return dat_dir+dat_targets[dat_target_index]+dat_ext;
-}
-
-std::string get_acc_out_name(int vertex_cut_value, int dat_target_index, int Q2_bin, int Nu_bin, int Zh_bin)
-{
-    return acc_result_dir+"acc"+targets[vertex_cut_value-1][dat_target_index]+"_"+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+".root";
-}
-
-std::string get_centroids_out_name(int vertex_cut_value, int dat_target_index, int Q2_bin, int Nu_bin, int Zh_bin)
-{
-    return rad_result_dir+"centroids"+targets[vertex_cut_value-1][dat_target_index]+"_"+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+".root";
-}
-
-std::string get_accf_histo_name(int vertex_cut_value, int dat_target_index, int Q2_bin, int Nu_bin, int Zh_bin, int Pt2_bin)
-{
-    return histo_accf+targets[vertex_cut_value-1][dat_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin);
-}
-
-std::string get_data_histo_name(int vertex_cut_value, int dat_target_index, int Q2_bin, int Nu_bin, int Zh_bin, int Pt2_bin)
-{
-    return histo_data+targets[vertex_cut_value-1][dat_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin);
-}
-
-std::string get_acccorr_histo_name(int vertex_cut_value, int dat_target_index, int Q2_bin, int Nu_bin, int Zh_bin, int Pt2_bin)
-{
-    return histo_acc+targets[vertex_cut_value-1][dat_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin);
-}
-
-
 // ACCEPTANCE 
 
 // Returns 1 when histo is empty

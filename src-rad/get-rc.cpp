@@ -15,6 +15,7 @@
 #include "haprad_constants.h"
 #include "names.h"
 #include "utils.h"
+#include "utils-names.h"
 #include "analysis-constants.h"
 
 std::string newphihist_targ;
@@ -34,32 +35,28 @@ int main(int argc, char* argv[])
     int Zh_bin = std::stoi(argv[5]);
 
     // Create file the rad factors will be stored
-    std::string output_file_name = rad_result_dir+"rcfactors"+targets[vertex_cut_value-1][dat_target_index]+"_"+
-                                   std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+".root";
-    TFile* foutput = new TFile(output_file_name.c_str(),"RECREATE");
+    TFile* fout = new TFile(get_rad_file_name(vertex_cut_value,dat_target_index,Q2_bin,Nu_bin,Zh_bin).c_str(),"RECREATE");
     gROOT->cd();
 
     // Open the file with the centroids
-    std::string centroids_file_name = rad_result_dir+"centroids"+targets[vertex_cut_value-1][dat_target_index]+"_"+
-                                      std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+".root";
-    TFile* fcentroids = new TFile(centroids_file_name.c_str());
+    TFile* fctr = new TFile(get_ctr_file_name(vertex_cut_value,dat_target_index,Q2_bin,Nu_bin,Zh_bin).c_str());
 
     // Obtain the tuple that contains the centroids
     float Q2_centroid, Xb_centroid, Zh_centroid, Pt_centroid, Phi_centroid, Q2_centroid_bin, Xb_centroid_bin, Zh_centroid_bin, Pt_centroid_bin, Phi_centroid_bin;
-    TNtuple* centroids = (TNtuple*) fcentroids->Get(ntuple_centroids);
-    centroids->SetBranchAddress("Q2"     , &Q2_centroid     );
-    centroids->SetBranchAddress("Xb"     , &Xb_centroid     );
-    centroids->SetBranchAddress("Zh"     , &Zh_centroid     );
-    centroids->SetBranchAddress("Pt"     , &Pt_centroid     );
-    centroids->SetBranchAddress("Phi"    , &Phi_centroid    );
-    centroids->SetBranchAddress("Q2_bin" , &Q2_centroid_bin );
-    centroids->SetBranchAddress("Xb_bin" , &Xb_centroid_bin );
-    centroids->SetBranchAddress("Zh_bin" , &Zh_centroid_bin );
-    centroids->SetBranchAddress("Pt2_bin", &Pt_centroid_bin );
-    centroids->SetBranchAddress("Phi_bin", &Phi_centroid_bin);
+    TNtuple* ntuple_ctr = (TNtuple*) fctr->Get(ntuple_ctr_name);
+    ntuple_ctr->SetBranchAddress("Q2"     , &Q2_centroid     );
+    ntuple_ctr->SetBranchAddress("Xb"     , &Xb_centroid     );
+    ntuple_ctr->SetBranchAddress("Zh"     , &Zh_centroid     );
+    ntuple_ctr->SetBranchAddress("Pt"     , &Pt_centroid     );
+    ntuple_ctr->SetBranchAddress("Phi"    , &Phi_centroid    );
+    ntuple_ctr->SetBranchAddress("Q2_bin" , &Q2_centroid_bin );
+    ntuple_ctr->SetBranchAddress("Xb_bin" , &Xb_centroid_bin );
+    ntuple_ctr->SetBranchAddress("Zh_bin" , &Zh_centroid_bin );
+    ntuple_ctr->SetBranchAddress("Pt2_bin", &Pt_centroid_bin );
+    ntuple_ctr->SetBranchAddress("Phi_bin", &Phi_centroid_bin);
 
     // Create the TNtuple that will contain the rc factors
-    TNtuple *rcfactors_tuple = new TNtuple(ntuple_rad_name,ntuple_rad_name,"rc1:rc3:Q2_bin:Nu_bin:Zh_bin:Pt2_bin:Phi_bin"); 
+    TNtuple *ntuple_rad = new TNtuple(ntuple_rad_name,ntuple_rad_name,"rc1:rc3:Q2_bin:Nu_bin:Zh_bin:Pt2_bin:Phi_bin"); 
 
     // Target proton to neutron ratio
     double NAZ = 0;
@@ -75,11 +72,12 @@ int main(int argc, char* argv[])
 
     TRadCor rc;
 
+    // This variable is necessary to set the names of the fit phi pq files to be opened in the TSemiInclusiveModel.cxx file
     newphihist_targ = targets[vertex_cut_value-1][dat_target_index];
 
-    for(int entry = 0 ; entry < centroids->GetEntries() ; entry++)
+    for(int entry = 0 ; entry < ntuple_ctr->GetEntries() ; entry++)
     {
-        centroids->GetEntry(entry);
+        ntuple_ctr->GetEntry(entry);
 
         if(Q2_centroid_bin==Q2_bin&&Xb_centroid_bin==Nu_bin&&Zh_centroid_bin==Zh_bin)
         {
@@ -94,7 +92,7 @@ int main(int argc, char* argv[])
 	        if(Mx2<m)
             {
                 std::cout<<"Missing mass condition not fulfilled! Setting rc factor to -1"<<std::endl;
-	            rcfactors_tuple->Fill(-1,-1,Q2_centroid_bin,Xb_centroid_bin,Zh_centroid_bin,Pt_centroid_bin,Phi_centroid_bin-1);
+	            ntuple_rad->Fill(-1,-1,Q2_centroid_bin,Xb_centroid_bin,Zh_centroid_bin,Pt_centroid_bin,Phi_centroid_bin-1);
 	            continue;
 	        }
 
@@ -105,18 +103,18 @@ int main(int argc, char* argv[])
 	        if(TMath::IsNaN(f1) || f1 == a3) f1 = 0;
 	        if(TMath::IsNaN(f2) || f2 == a3) f2 = 0;
 	        if(TMath::IsNaN(f3) || f3 == a3) f3 = 0;
-	        rcfactors_tuple->Fill(f1,f3,Q2_centroid_bin,Xb_centroid_bin,Zh_centroid_bin,Pt_centroid_bin,Phi_centroid_bin);            
+	        ntuple_rad->Fill(f1,f3,Q2_centroid_bin,Xb_centroid_bin,Zh_centroid_bin,Pt_centroid_bin,Phi_centroid_bin);            
         }
     }
     
     //Store the TNtuple
-    foutput->cd();
-    rcfactors_tuple->Write();
+    fout->cd();
+    ntuple_rad->Write();
     gROOT->cd();
 
     // Close the TFiles
-    foutput->Close();
-    fcentroids->Close();
+    fout->Close();
+    fctr->Close();
 
     return 1;
 }

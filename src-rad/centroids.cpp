@@ -7,6 +7,7 @@
 #include "TCut.h"
 #include "names.h"
 #include "utils.h"
+#include "utils-names.h"
 #include "analysis-constants.h"
 
 int main(int argc, char* argv[])
@@ -36,7 +37,7 @@ int main(int argc, char* argv[])
     if(!fdat->IsOpen()){std::cout<<"ERROR! File was not opened!"<<std::endl; return 1;}
     
     // Open create results folder
-    TFile* fresult = new TFile(get_centroids_out_name(vertex_cut_value,dat_target_index,Q2_bin,Nu_bin,Zh_bin).c_str(),"RECREATE");
+    TFile* fresult = new TFile(get_ctr_file_name(vertex_cut_value,dat_target_index,Q2_bin,Nu_bin,Zh_bin).c_str(),"RECREATE");
     gROOT->cd();
 
     // Obtain the tuples
@@ -45,7 +46,7 @@ int main(int argc, char* argv[])
     if(ntuple_dat==NULL){std::cout<<"ERROR! Data tuple could not be loaded!"<<std::endl; return 1;}
 
     // Create centroid tuples
-    TNtuple* centroids_data = new TNtuple(ntuple_centroids,ntuple_centroids,"Q2:Xb:Zh:Pt:Phi:Q2_bin:Xb_bin:Zh_bin:Pt2_bin:Phi_bin");
+    TNtuple* centroids_data = new TNtuple(ntuple_ctr_name,ntuple_ctr_name,"Q2:Xb:Zh:Pt:Phi:Q2_bin:Xb_bin:Zh_bin:Pt2_bin:Phi_bin");
 
     // Setting the base cuts
     std::cout<<"The bin selected was:"<<std::endl;

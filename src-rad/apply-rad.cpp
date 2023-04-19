@@ -4,6 +4,8 @@
 #include "TNtuple.h"
 #include "TH1F.h"
 #include "names.h"
+#include "utils.h"
+#include "utils-names.h"
 #include "analysis-constants.h"
 
 int main(int argc, char* argv[])
@@ -16,17 +18,13 @@ int main(int argc, char* argv[])
     int vertex_cut_value = std::stof(argv[2]);
 
     // Open radiative corrections file and acceptance corrected data file
-    std::string rad_file_name = rad_result_dir+"rcfactors"+targets[vertex_cut_value-1][dat_target_index]+".root";
-    std::string acc_file_name = acc_result_dir+"acc"+targets[vertex_cut_value-1][dat_target_index]+".root";
-    TFile* frad = new TFile(rad_file_name.c_str());
-    TFile* facc = new TFile(acc_file_name.c_str());
+    TFile* frad = new TFile(get_rad_file_name(vertex_cut_value,dat_target_index).c_str());
+    TFile* facc = new TFile(get_acc_file_name(vertex_cut_value,dat_target_index).c_str());
 
     // Open the output files
-    std::string output1_file_name = rad_result_dir+"fullcorr1"+targets[vertex_cut_value-1][dat_target_index]+".root";
-    TFile* fout1 = new TFile(output1_file_name.c_str(),"RECREATE");
+    TFile* fout1 = new TFile(get_fullcorr_file_name(vertex_cut_value,dat_target_index,1).c_str(),"RECREATE");
     gROOT->cd();
-    std::string output2_file_name = rad_result_dir+"fullcorr2"+targets[vertex_cut_value-1][dat_target_index]+".root";
-    TFile* fout2 = new TFile(output2_file_name.c_str(),"RECREATE");
+    TFile* fout2 = new TFile(get_fullcorr_file_name(vertex_cut_value,dat_target_index,2).c_str(),"RECREATE");
     gROOT->cd();
 
     //  Obtain the rcfactors TNtuple
@@ -52,10 +50,10 @@ int main(int argc, char* argv[])
                 for(int Pt2_bin = 0 ; Pt2_bin < N_Pt2 ; Pt2_bin++)
                 {
                     // Get acceptance corrected PhiPQ and write it
-                    h = (TH1F*) facc->Get((histo_acc+targets[vertex_cut_value-1][dat_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
-                    if(h==NULL) {continue;}
+                    h = (TH1F*) facc->Get(get_acccorr_histo_name(vertex_cut_value,dat_target_index,Q2_bin,Nu_bin,Zh_bin,Pt2_bin).c_str());
+                    if(h==NULL) continue;
                     fout1->cd();
-                    h->Write((histo_acc+targets[vertex_cut_value-1][dat_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
+                    h->Write(get_acccorr_histo_name(vertex_cut_value,dat_target_index,Q2_bin,Nu_bin,Zh_bin,Pt2_bin).c_str());
                     gROOT->cd();
 
                     // Apply the RC factor
@@ -76,14 +74,14 @@ int main(int argc, char* argv[])
 
                     // Write the rad corrected histo
                     fout1->cd();
-                    h->Write((histo_accrc+targets[vertex_cut_value-1][dat_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
+                    h->Write(get_accrccorr_histo_name(vertex_cut_value,dat_target_index,Q2_bin,Nu_bin,Zh_bin,Pt2_bin).c_str());
                     gROOT->cd();
 
                     // Reset and start the process again
                     h->Reset();
-                    h = (TH1F*) facc->Get((histo_acc+targets[vertex_cut_value-1][dat_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
+                    h = (TH1F*) facc->Get(get_acccorr_histo_name(vertex_cut_value,dat_target_index,Q2_bin,Nu_bin,Zh_bin,Pt2_bin).c_str());
                     fout2->cd();
-                    h->Write((histo_acc+targets[vertex_cut_value-1][dat_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
+                    h->Write(get_acccorr_histo_name(vertex_cut_value,dat_target_index,Q2_bin,Nu_bin,Zh_bin,Pt2_bin).c_str());
                     gROOT->cd();
                     
                     // Case 2 : There is a positive RC factor. The rest goes to zero
@@ -114,7 +112,7 @@ int main(int argc, char* argv[])
 
                     // Write the rad corrected histo
                     fout2->cd();
-                    h->Write((histo_accrc+targets[vertex_cut_value-1][dat_target_index]+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+std::to_string(Pt2_bin)).c_str());
+                    h->Write(get_accrccorr_histo_name(vertex_cut_value,dat_target_index,Q2_bin,Nu_bin,Zh_bin,Pt2_bin).c_str());
                     gROOT->cd();
                 }
             }
