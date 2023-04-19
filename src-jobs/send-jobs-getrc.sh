@@ -10,12 +10,15 @@ errout_check(){
     fi
 }
 
+# Be sure to set your ifarm/cluster username!
+username=emolina
+
 # Store the mother directory
 cd ..
 main_dir=$(pwd)
 
 # Make the sofware
-n_jobs=$(squeue -u emolina | grep -i " R " | wc -l)
+n_jobs=$(squeue -u ${username} | grep -i " R " | wc -l)
 if [ ${n_jobs} = 0 ]
 then
     cd ./haprad-cpp
