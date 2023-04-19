@@ -19,13 +19,13 @@ bla
 4. Calculate the radiative correction factors with the results of step (2) and (3).
 
 ## Dependence between the processes
-´´´mermaid
+```mermaid
 graph LR;
     acceptance-->fit-phipq;
     centroids-->fit-phipq;
     centroids-->get-rc;
     fit-phipq-->get-rc;
-´´´
+```
 - *acceptance* and *centroids* are independent between them and with respect to the other processes.
 - *fit-phipq* depends on *acceptance* and *centroids*
 - *get-rc* depends on *fit-phipq* and *centroids*
