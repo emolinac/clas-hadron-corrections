@@ -22,8 +22,8 @@ bla
 ```mermaid
 graph LR;
     (data)-->acceptance;
-    (simul)-->acceptance;
     (data)-->centroids;
+    (simul)-->acceptance;
     acceptance-->fit-phipq;
     centroids-->fit-phipq;
     centroids-->get-rc;
