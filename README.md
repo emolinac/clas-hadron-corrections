@@ -21,9 +21,9 @@ bla
 ## Dependence between the processes
 ```mermaid
 graph LR;
-    (data)-->acceptance;
-    (data)-->centroids;
-    (simul)-->acceptance;
+    A(data)-->acceptance;
+    A(data)-->centroids;
+    B(simul)-->acceptance;
     acceptance-->fit-phipq;
     centroids-->fit-phipq;
     centroids-->get-rc;
