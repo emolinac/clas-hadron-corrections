@@ -37,19 +37,13 @@ int main(int argc, char* argv[])
     if(!facc->IsOpen()||!fctr->IsOpen()){std::cout<<"ERROR! Files were not opened!"<<std::endl; return 1;}
 
     // Obtain the tuple that contains the centroids
-    float Q2_centroid, Xb_centroid, Zh_centroid, Pt_centroid, Phi_centroid, Q2_centroid_bin, Xb_centroid_bin, Zh_centroid_bin, Pt_centroid_bin, Phi_centroid_bin;
-    TNtuple*ntuple_ctr = (TNtuple*) fctr->Get(ntuple_ctr_name);
-    ntuple_ctr->SetBranchAddress("Q2"     , &Q2_centroid     );
-    ntuple_ctr->SetBranchAddress("Xb"     , &Xb_centroid     );
-    ntuple_ctr->SetBranchAddress("Zh"     , &Zh_centroid     );
-    ntuple_ctr->SetBranchAddress("Pt"     , &Pt_centroid     );
-    ntuple_ctr->SetBranchAddress("Phi"    , &Phi_centroid    );
-    ntuple_ctr->SetBranchAddress("Q2_bin" , &Q2_centroid_bin );
-    ntuple_ctr->SetBranchAddress("Xb_bin" , &Xb_centroid_bin );
-    ntuple_ctr->SetBranchAddress("Zh_bin" , &Zh_centroid_bin );
-    ntuple_ctr->SetBranchAddress("Pt2_bin", &Pt_centroid_bin );
-    ntuple_ctr->SetBranchAddress("Phi_bin", &Phi_centroid_bin);
+    TNtuple* ntuple_ctr = (TNtuple*) fctr->Get(ntuple_ctr_name);
 
+    // Set the branches of the centroids TNtuple
+    float Q2_centroid, Xb_centroid, Zh_centroid, Pt_centroid, Phi_centroid;
+    float Q2_centroid_bin, Xb_centroid_bin, Zh_centroid_bin, Pt_centroid_bin, Phi_centroid_bin;
+    set_ctr_branches(&Q2_centroid, &Xb_centroid, &Zh_centroid, &Pt_centroid, &Phi_centroid, &Q2_centroid_bin, &Xb_centroid_bin, &Zh_centroid_bin, &Pt_centroid_bin, &Phi_centroid_bin, ntuple_ctr);
+    
     // Define the fitting function
     TF1* fit_func = new TF1("fit_func", "[0]+TMath::Cos(x*TMath::Pi()/180)*[1]+TMath::Cos(2*x*TMath::Pi()/180)*[2]");
 

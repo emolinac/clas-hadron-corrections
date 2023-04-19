@@ -37,7 +37,7 @@ int main(int argc, char* argv[])
     if(!fdat->IsOpen()){std::cout<<"ERROR! File was not opened!"<<std::endl; return 1;}
     
     // Open create results folder
-    TFile* fresult = new TFile(get_ctr_file_name(vertex_cut_value,dat_target_index,Q2_bin,Nu_bin,Zh_bin).c_str(),"RECREATE");
+    TFile* fout = new TFile(get_ctr_file_name(vertex_cut_value,dat_target_index,Q2_bin,Nu_bin,Zh_bin).c_str(),"RECREATE");
     gROOT->cd();
 
     // Obtain the tuples
@@ -120,12 +120,12 @@ int main(int argc, char* argv[])
     }
 
     //Store the TNtuple
-    fresult->cd();
+    fout->cd();
     centroids_data->Write();
     gROOT->cd();
 
     // Close TFiles
-    fresult->Close();
+    fout->Close();
     fdat->Close();
     
     return 1;

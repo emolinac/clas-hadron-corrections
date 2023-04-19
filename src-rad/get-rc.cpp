@@ -42,19 +42,13 @@ int main(int argc, char* argv[])
     TFile* fctr = new TFile(get_ctr_file_name(vertex_cut_value,dat_target_index,Q2_bin,Nu_bin,Zh_bin).c_str());
 
     // Obtain the tuple that contains the centroids
-    float Q2_centroid, Xb_centroid, Zh_centroid, Pt_centroid, Phi_centroid, Q2_centroid_bin, Xb_centroid_bin, Zh_centroid_bin, Pt_centroid_bin, Phi_centroid_bin;
     TNtuple* ntuple_ctr = (TNtuple*) fctr->Get(ntuple_ctr_name);
-    ntuple_ctr->SetBranchAddress("Q2"     , &Q2_centroid     );
-    ntuple_ctr->SetBranchAddress("Xb"     , &Xb_centroid     );
-    ntuple_ctr->SetBranchAddress("Zh"     , &Zh_centroid     );
-    ntuple_ctr->SetBranchAddress("Pt"     , &Pt_centroid     );
-    ntuple_ctr->SetBranchAddress("Phi"    , &Phi_centroid    );
-    ntuple_ctr->SetBranchAddress("Q2_bin" , &Q2_centroid_bin );
-    ntuple_ctr->SetBranchAddress("Xb_bin" , &Xb_centroid_bin );
-    ntuple_ctr->SetBranchAddress("Zh_bin" , &Zh_centroid_bin );
-    ntuple_ctr->SetBranchAddress("Pt2_bin", &Pt_centroid_bin );
-    ntuple_ctr->SetBranchAddress("Phi_bin", &Phi_centroid_bin);
 
+    // Set the branches of the centroids TNtuple
+    float Q2_centroid, Xb_centroid, Zh_centroid, Pt_centroid, Phi_centroid;
+    float Q2_centroid_bin, Xb_centroid_bin, Zh_centroid_bin, Pt_centroid_bin, Phi_centroid_bin;
+    set_ctr_branches(&Q2_centroid, &Xb_centroid, &Zh_centroid, &Pt_centroid, &Phi_centroid, &Q2_centroid_bin, &Xb_centroid_bin, &Zh_centroid_bin, &Pt_centroid_bin, &Phi_centroid_bin, ntuple_ctr);
+    
     // Create the TNtuple that will contain the rc factors
     TNtuple *ntuple_rad = new TNtuple(ntuple_rad_name,ntuple_rad_name,"rc1:rc3:Q2_bin:Nu_bin:Zh_bin:Pt2_bin:Phi_bin"); 
 

@@ -28,15 +28,12 @@ int main(int argc, char* argv[])
     gROOT->cd();
 
     //  Obtain the rcfactors TNtuple
-    float Q2_bin_rad, Nu_bin_rad, Zh_bin_rad, Pt2_bin_rad, Phi_bin_rad, rc1;
     TNtuple* ntuple_rad = (TNtuple*) frad->Get(ntuple_rad_name);
-    ntuple_rad->SetBranchAddress("Q2_bin",&Q2_bin_rad);
-    ntuple_rad->SetBranchAddress("Nu_bin",&Nu_bin_rad);
-    ntuple_rad->SetBranchAddress("Zh_bin",&Zh_bin_rad);
-    ntuple_rad->SetBranchAddress("Pt2_bin",&Pt2_bin_rad);
-    ntuple_rad->SetBranchAddress("Phi_bin",&Phi_bin_rad);
-    ntuple_rad->SetBranchAddress("rc1",&rc1);
 
+    // Set the branches of the rc factors TNtuple
+    float Q2_bin_rad, Nu_bin_rad, Zh_bin_rad, Pt2_bin_rad, Phi_bin_rad, rc1;
+    set_rad_branches(&Q2_bin_rad, &Nu_bin_rad, &Zh_bin_rad, &Pt2_bin_rad, &Phi_bin_rad, &rc1, ntuple_rad);
+    
     // Declare instrumental histo
     TH1F* h;
 
