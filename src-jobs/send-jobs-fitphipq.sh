@@ -11,7 +11,7 @@ errout_check(){
 }
 
 # Be sure to set your ifarm/cluster username!
-username=emolina
+username=$(echo ${USER})
 
 # Store the mother directory
 cd ..
