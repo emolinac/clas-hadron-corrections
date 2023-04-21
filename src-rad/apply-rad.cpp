@@ -34,8 +34,9 @@ int main(int argc, char* argv[])
     float Q2_bin_rad, Nu_bin_rad, Zh_bin_rad, Pt2_bin_rad, Phi_bin_rad, rc1;
     set_rad_branches(&Q2_bin_rad, &Nu_bin_rad, &Zh_bin_rad, &Pt2_bin_rad, &Phi_bin_rad, &rc1, ntuple_rad);
     
-    // Declare instrumental histo
+    // Declare instrumental histos (correction and data)
     TH1F* h;
+    TH1F* hdat;
 
     // Start the correction process
     for(int Q2_bin = 0 ; Q2_bin < N_Q2 ; Q2_bin++)
@@ -46,11 +47,13 @@ int main(int argc, char* argv[])
             {
                 for(int Pt2_bin = 0 ; Pt2_bin < N_Pt2 ; Pt2_bin++)
                 {
-                    // Get acceptance corrected PhiPQ and write it
-                    h = (TH1F*) facc->Get(get_acccorr_histo_name(vertex_cut_value,dat_target_index,Q2_bin,Nu_bin,Zh_bin,Pt2_bin).c_str());
+                    // Get acceptance-corrected PhiPQ . Then, write them.
+                    h    = (TH1F*) facc->Get(get_acccorr_histo_name(vertex_cut_value,dat_target_index,Q2_bin,Nu_bin,Zh_bin,Pt2_bin).c_str());
+                    hdat = (TH1F*) facc->Get(get_data_histo_name(vertex_cut_value,dat_target_index,Q2_bin,Nu_bin,Zh_bin,Pt2_bin).c_str());
                     if(h==NULL) continue;
                     fout1->cd();
                     h->Write(get_acccorr_histo_name(vertex_cut_value,dat_target_index,Q2_bin,Nu_bin,Zh_bin,Pt2_bin).c_str());
+                    hdat->Write(get_data_histo_name(vertex_cut_value,dat_target_index,Q2_bin,Nu_bin,Zh_bin,Pt2_bin).c_str());
                     gROOT->cd();
 
                     // Apply the RC factor
@@ -79,6 +82,7 @@ int main(int argc, char* argv[])
                     h = (TH1F*) facc->Get(get_acccorr_histo_name(vertex_cut_value,dat_target_index,Q2_bin,Nu_bin,Zh_bin,Pt2_bin).c_str());
                     fout2->cd();
                     h->Write(get_acccorr_histo_name(vertex_cut_value,dat_target_index,Q2_bin,Nu_bin,Zh_bin,Pt2_bin).c_str());
+                    hdat->Write(get_data_histo_name(vertex_cut_value,dat_target_index,Q2_bin,Nu_bin,Zh_bin,Pt2_bin).c_str());
                     gROOT->cd();
                     
                     // Case 2 : There is a positive RC factor. The rest goes to zero
