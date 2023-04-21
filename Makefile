@@ -14,7 +14,7 @@ CERNLIBS    := -lpdflib804 -lmathlib -lphtools -lpacklib -lkernlib -lpawlib
 LDFLAGS     := -O3 ${ROOTLDFLAGS} -lgfortran -Wl,-rpath,./haprad-cpp/slib
 
 INCLUDES_RC  := -I$(ROOTINCDIR) -I./haprad-cpp -I${INC}
-LIBS_RC      := -L./haprad-cpp/slib -lTRadCor $(ROOTLIBS) -lMathMore -L/opt/cern/pro/lib/ $(CERNLIBS)
+LIBS_RC      := -L./haprad-cpp/slib -lTRadCor $(ROOTLIBS) -lMathMore #-L/opt/cern/pro/lib/ $(CERNLIBS)
 
 all: ${BIN}/acceptance ${BIN}/centroids ${BIN}/fit-phipq ${BIN}/apply-rad ${BIN}/get-rc
 

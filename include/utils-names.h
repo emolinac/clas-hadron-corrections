@@ -40,6 +40,11 @@ std::string get_rad_file_name(int vertex_cut_value, int dat_target_index)
     return rad_result_dir+"rcfactors"+targets[vertex_cut_value-1][dat_target_index]+".root";
 }
 
+std::string get_fullcorr_file_name(int vertex_cut_value, int dat_target_index, int Q2_bin, int Nu_bin, int Zh_bin)
+{
+    return rad_result_dir+"fullcorr"+std::to_string(rad_case)+targets[vertex_cut_value-1][dat_target_index]+"_"+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+".root";
+}
+
 std::string get_fullcorr_file_name(int vertex_cut_value, int dat_target_index, int rad_case)
 {
     return rad_result_dir+"fullcorr"+std::to_string(rad_case)+targets[vertex_cut_value-1][dat_target_index]+".root";
