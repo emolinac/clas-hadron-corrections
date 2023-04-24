@@ -20,13 +20,17 @@ ROOTCINT    := rootcint
 #CXXFLAGS += -g -fPIC
 #endif
 
-ifeq ($(findstring Linux,$(OS_NAME)),Linux)
+#ifeq ($(findstring Linux,$(OS_NAME)),Linux)
+#CXX       := g++  -fPIC 
+#CXXFLAGS  += -Wall $(ROOTCFLAGS) $(SET_DEBUG) #\
+#    ./configure--enable-shared_dependencies
+#endif
+
 CXX       := g++  -fPIC 
 CXXFLAGS  += -Wall $(ROOTCFLAGS) $(SET_DEBUG) #\
     ./configure--enable-shared_dependencies
-endif
 
-LD        = g++ -fPIC 
+LD        = g++ 
 LDFLAGS   = -O3 $(ROOTLDFLAGS) -lgfortran 
 SOFLAGS   = -Wl,-soname,$(notdir $@) -shared
 
@@ -54,7 +58,7 @@ SH_LIB     := libTRadCor.so
 CERNLIBS   := -lpdflib804 -lmathlib -lphtools -lpacklib -lkernlib -lpawlib
 FLIBS      := $(CERNLIBS)
 
-FCC        := gfortran
+FCC        := gfortran -std=legacy
 
 F77OPT     := -fPIC -DLinux -ffixed-line-length-none -fdollar-ok \
               -fno-second-underscore
