@@ -17,6 +17,10 @@ graph LR;
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:"other_paths_already_set":"path_to_clas-hadron-corrections/haprad-cpp/slib"
 ```
 2. Source the .bashrc file 
+3. Install *makedepend* with the following line:
+```
+sudo apt-get install xutils-dev
+```
 
 ## Setting the specs for the analysis
 ### analysis-constants.h
@@ -86,6 +90,6 @@ hadd accDFe.root accDFe_*.root
 ```
 8. Go to *bin*. Execute the following command:
 ```
-./apply-rad
+./apply-rad data_target vertex_cut
 ```
-9. Congrats! You just obtained fully corrected results for the liquid target of the Fe runs.
+9. data_target and vertex_cut follows the same number convention as shown in step 1
