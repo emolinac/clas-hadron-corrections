@@ -60,6 +60,7 @@ int main(int argc, char* argv[])
                     // Case 1 : There is a positive RC factor
                     for(int Phi_bin = 0 ; Phi_bin < N_Phi ; Phi_bin++)
                     {
+                        // Apply the RC factor to the selected bin
                         for(int entry = 0 ; entry < ntuple_rad->GetEntries() ; entry++)
                         {
                             ntuple_rad->GetEntry(entry);
@@ -86,29 +87,26 @@ int main(int argc, char* argv[])
                     gROOT->cd();
                     
                     // Case 2 : There is a positive RC factor. The rest goes to zero
-                    int corr_aplied = 0;
+                    double Phi_content[N_Phi];
                     for(int Phi_bin = 0 ; Phi_bin < N_Phi ; Phi_bin++)
                     {
+                        // Store the acceptance-corrected values before applying RC factors
+                        Phi_content[Phi_bin] = h->GetBinContent(Phi_bin+1);
+
+                        // Apply the RC factor to the selected bin
                         for(int entry = 0 ; entry < ntuple_rad->GetEntries() ; entry++)
                         {
                             ntuple_rad->GetEntry(entry);
                             if(Q2_bin==Q2_bin_rad&&Nu_bin==Nu_bin_rad&&Zh_bin==Zh_bin_rad&&Pt2_bin==Pt2_bin_rad&&Phi_bin==Phi_bin_rad&&rc1>0)
                             {
-                                corr_aplied++;
                                 h->SetBinContent(Phi_bin+1, h->GetBinContent(Phi_bin+1)/rc1);
                                 h->SetBinError(Phi_bin+1, h->GetBinError(Phi_bin+1)/rc1);
                                 break;                             
                             }
                         }
-                    }
 
-                    if(corr_aplied==0)
-                    {
-                        for(int Phi_bin = 0 ; Phi_bin < N_Phi ; Phi_bin++)
-                        {
-                            h->SetBinContent(Phi_bin+1, 0);
-                            h->SetBinError(Phi_bin+1, 0);
-                        }
+                        // Verify if there was a RC factor applied. If not, nullify the bin
+                        if(Phi_content[Phi_bin]==h->GetBinContent(Phi_bin+1)) h->SetBinContent(Phi_bin+1, 0.);
                     }
 
                     // Write the rad corrected histo
