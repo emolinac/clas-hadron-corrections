@@ -86,7 +86,7 @@ int main(int argc, char* argv[])
 	        if(Mx2<m)
             {
                 std::cout<<"Missing mass condition not fulfilled! Setting rc factor to -1"<<std::endl;
-	            ntuple_rad->Fill(-1,-1,Q2_centroid_bin,Xb_centroid_bin,Zh_centroid_bin,Pt_centroid_bin,Phi_centroid_bin-1);
+	            ntuple_rad->Fill(-1,-1,Q2_centroid_bin,Xb_centroid_bin,Zh_centroid_bin,Pt_centroid_bin,Phi_centroid_bin);
 	            continue;
 	        }
 
