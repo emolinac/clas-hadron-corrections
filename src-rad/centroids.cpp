@@ -72,7 +72,7 @@ int main(int argc, char* argv[])
     ntuple_dat->SetEventList(evnt_dat);
 
     // Declare the necessary histograms
-    TH1F* hq2  = new TH1F("hq2" ,"",150,Q2_min       ,Phi_max      );
+    TH1F* hq2  = new TH1F("hq2" ,"",150,Q2_min       ,Q2_max       );
     TH1F* hxb  = new TH1F("hxb" ,"",150,0.1          ,0.6          );
     TH1F* hzh  = new TH1F("hzh" ,"",150,Zh_min       ,Zh_max       );
     TH1F* hpt  = new TH1F("hpt" ,"",150,sqrt(Pt2_min),sqrt(Pt2_max));
