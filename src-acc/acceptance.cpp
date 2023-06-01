@@ -67,13 +67,13 @@ int main(int argc, char* argv[])
     TCut cuts_rec = Q2_cut&&Nu_cut&&Zh_cut;
 
     // Setting additional data cuts
-    for(int i = 0 ; i < sizeof(dat_add_cut)/sizeof(dat_add_cut) ; i++) cuts_dat += dat_add_cut[i];
+    for(int i = 0 ; i < sizeof(dat_add_cut)/sizeof(TCut) ; i++) cuts_dat += dat_add_cut[i];
     
     // Setting additional cuts to thrown simul
-    for(int i = 0 ; i < sizeof(thr_add_cut)/sizeof(thr_add_cut) ; i++) cuts_thr += thr_add_cut[i];
+    for(int i = 0 ; i < sizeof(thr_add_cut)/sizeof(TCut) ; i++) cuts_thr += thr_add_cut[i];
 
     // Setting additional cuts to reconstructed simul
-    for(int i = 0 ; i < sizeof(rec_add_cut)/sizeof(rec_add_cut) ; i++) cuts_rec += rec_add_cut[i];
+    for(int i = 0 ; i < sizeof(rec_add_cut)/sizeof(TCut) ; i++) cuts_rec += rec_add_cut[i];
 
     // SANITIY CHECK (DELETE LATER)
     std::cout<<"data list cuts   : "<<cuts_dat<<std::endl;

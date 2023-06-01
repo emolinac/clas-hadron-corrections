@@ -62,7 +62,7 @@ int main(int argc, char* argv[])
     TCut cuts_dat = Q2_cut&&Nu_cut&&Zh_cut&&VZ_cut;
     
     // Setting additional data cuts
-    for(int i = 0 ; i < sizeof(dat_add_cut)/sizeof(dat_add_cut) ; i++) cuts_dat += dat_add_cut[i];
+    for(int i = 0 ; i < sizeof(dat_add_cut)/sizeof(TCut) ; i++) cuts_dat += dat_add_cut[i];
     
     // Set TEventLists to make everything faster
     ntuple_dat->Draw(">>list_dat",cuts_dat);
