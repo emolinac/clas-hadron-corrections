@@ -75,6 +75,11 @@ int main(int argc, char* argv[])
     // Setting additional cuts to reconstructed simul
     for(int i = 0 ; i < sizeof(rec_add_cut)/sizeof(rec_add_cut) ; i++) cuts_rec += rec_add_cut[i];
 
+    // SANITIY CHECK (DELETE LATER)
+    std::cout<<"data list cuts   : "<<cuts_dat<<std::endl;
+    std::cout<<"thrown list cuts : "<<cuts_thr<<std::endl;
+    std::cout<<"recons list cuts : "<<cuts_rec<<std::endl;
+
     // Set TEventLists to make everything faster
     ntuple_thr->Draw(">>list_thr",cuts_thr);
     ntuple_rec->Draw(">>list_rec",cuts_rec);
