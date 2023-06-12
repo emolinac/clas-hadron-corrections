@@ -52,9 +52,9 @@ do
 
                 echo "Sending job for bin ${Q2_bin} ${Nu_bin} ${Zh_bin}"
 
-                sbatch --job-name=acc_${simu_target}${data_target}${vertex_cut} \
-                       --error=${main_dir}/err/acc-${simu_target}${data_target}${vertex_cut}_${Q2_bin}${Nu_bin}${Zh_bin} \
-                       --output=${main_dir}/out/acc-${simu_target}${data_target}${vertex_cut}_${Q2_bin}${Nu_bin}${Zh_bin} \
+                sbatch --job-name=acc_3${data_target}${vertex_cut} \
+                       --error=${main_dir}/err/acc-3${data_target}${vertex_cut}_${Q2_bin}${Nu_bin}${Zh_bin} \
+                       --output=${main_dir}/out/acc-3${data_target}${vertex_cut}_${Q2_bin}${Nu_bin}${Zh_bin} \
                        ./job-acc.sh 3 ${data_target} 1 ${Q2_bin} ${Nu_bin} ${Zh_bin}
             done
         done
@@ -73,6 +73,8 @@ do
                 Q2_bin=${i}
                 Nu_bin=${j}
                 Zh_bin=${k}
+
+                simu_target=${data_target}
 
                 echo "Sending job for bin ${Q2_bin} ${Nu_bin} ${Zh_bin}"
 
