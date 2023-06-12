@@ -32,11 +32,6 @@ cd ./src-jobs
 # Check if err and output dirs are present
 errout_check
 
-# Set target to use!
-simu_target=1   # 0->C, 1->Fe, 2->Pb, 3->D2
-data_target=1   # 0->C, 1->Fe, 2->Pb 
-vertex_cut=2    # 1->liquid, 2->solid
-
 # Send jobs
 N_Q2=3
 N_Nu=3
