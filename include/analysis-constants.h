@@ -20,6 +20,8 @@ const float Phi_max   =  180.;
 const float delta_Phi = (Phi_max-Phi_min)/N_Phi;
 
 // Additional cuts
-TCut dat_add_cut[2] = { "TMath::Abs(YC)<1.4" , "TMath::Abs(deltaZ)<3." };
-TCut rec_add_cut[2] = { "TMath::Abs(YC)<1.4" , "TMath::Abs(deltaZ)<3." };
-TCut thr_add_cut[1] = { "TMath::Abs(deltaZ)<3." };
+// Set to Xf>-10 to select all fragmentation regions 
+// Set to Xf>0 to select target fragmentation region
+TCut dat_add_cut[3] = { "Xf>-10" , "TMath::Abs(YC)<1.4" , "TMath::Abs(deltaZ)<3." };
+TCut rec_add_cut[3] = { "Xf>-10" , "TMath::Abs(YC)<1.4" , "TMath::Abs(deltaZ)<3." };
+TCut thr_add_cut[2] = { "Xf>-10" , "TMath::Abs(deltaZ)<3." };
