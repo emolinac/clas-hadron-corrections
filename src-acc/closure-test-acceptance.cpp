@@ -66,10 +66,11 @@ int main(int argc, char* argv[])
     // Setting additional data cuts
     for(int i = 0 ; i < sizeof(dat_add_cut)/sizeof(TCut) ; i++) cuts_dat += dat_add_cut[i];
 
-    for(int i = 0 ; i < sizeof(dat_add_cut)/sizeof(TCut) ; i++) cuts_ref += dat_add_cut[i];
     
     // Setting additional cuts to thrown
     for(int i = 0 ; i < sizeof(thr_add_cut)/sizeof(TCut) ; i++) cuts_thr += thr_add_cut[i];
+
+    for(int i = 0 ; i < sizeof(thr_add_cut)/sizeof(TCut) ; i++) cuts_ref += thr_add_cut[i];
 
     // Setting additional cuts to reconstructed
     for(int i = 0 ; i < sizeof(rec_add_cut)/sizeof(TCut) ; i++) cuts_rec += rec_add_cut[i];
