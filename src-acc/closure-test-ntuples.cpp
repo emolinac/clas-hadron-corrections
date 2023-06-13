@@ -58,7 +58,7 @@ int main(int argc, char* argv[])
     TNtuple* ntuple_dat_ct = new TNtuple(ntuple_dat_name,ntuple_dat_name,"Q2:Nu:Zh:Pt2:PhiPQ:Xf:deltaZ:YC");
     TNtuple* ntuple_ref_ct = new TNtuple(ntuple_ref_name,ntuple_ref_name,"Q2:Nu:Zh:Pt2:PhiPQ:Xf:deltaZ");
 
-    std::cout<<"Ntuples delcared."<<std::endl;
+    std::cout<<"Ntuples declared."<<std::endl;
 
     // Set the random number generator and its seed
     TRandom* r = new TRandom();
@@ -87,7 +87,7 @@ int main(int argc, char* argv[])
     std::cout<<"# CT Dat entries = "<<ntuple_dat_ct->GetEntries()<<std::endl;
     std::cout<<"# CT Thr entries = "<<ntuple_thr_ct->GetEntries()<<std::endl;
     std::cout<<"# CT Ref entries = "<<ntuple_ref_ct->GetEntries()<<std::endl;
-    
+
     // Write the TNtuples in the output file
     fresult->cd();
     ntuple_thr_ct->Write();
@@ -96,13 +96,9 @@ int main(int argc, char* argv[])
     ntuple_ref_ct->Write();
     gROOT->cd();
 
-    // Delete unnecessary objects
-    delete ntuple_thr_ct;
-    delete ntuple_rec_ct;
-    delete ntuple_dat_ct;
-    delete ntuple_ref_ct;
-    delete fresult;
-    delete fsim;
-
+    // Close files
+    fresult->Close();
+    fsim->Close();
+    
     return 1;
 }

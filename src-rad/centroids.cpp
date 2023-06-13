@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
 
     if(!fdat->IsOpen()){std::cout<<"ERROR! File was not opened!"<<std::endl; return 1;}
     
-    // Open create results folder
+    // Create results folder
     TFile* fout = new TFile(get_ctr_file_name(vertex_cut_value,dat_target_index,Q2_bin,Nu_bin,Zh_bin).c_str(),"RECREATE");
     gROOT->cd();
 
