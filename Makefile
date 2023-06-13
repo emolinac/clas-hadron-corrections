@@ -16,10 +16,13 @@ LDFLAGS     := -O3 ${ROOTLDFLAGS} -lgfortran -Wl,-rpath,./haprad-cpp/slib
 INCLUDES_RC  := -I$(ROOTINCDIR) -I./haprad-cpp -I${INC}
 LIBS_RC      := -L./haprad-cpp/slib -lTRadCor $(ROOTLIBS) -lMathMore -L/opt/cern/pro/lib/ $(CERNLIBS)
 
-all: ${BIN}/acceptance ${BIN}/centroids ${BIN}/fit-phipq ${BIN}/apply-rad ${BIN}/get-rc
+all: ${BIN}/acceptance ${BIN}/closure-test-ntuples ${BIN}/centroids ${BIN}/fit-phipq ${BIN}/apply-rad ${BIN}/get-rc
 
 ${BIN}/acceptance: ${SRC_ACC}/acceptance.cpp
 	${CXX} ${ROOTCFLAGS} ${SRC_ACC}/acceptance.cpp -I${INC} ${ROOTLIBS} -o ${BIN}/acceptance
+
+${BIN}/closure-test-ntuples: ${SRC_ACC}/closure-test-ntuples.cpp
+	${CXX} ${ROOTCFLAGS} ${SRC_ACC}/closure-test-ntuples.cpp -I${INC} ${ROOTLIBS} -o ${BIN}/closure-test-ntuples
 
 ${BIN}/centroids: ${SRC_RAD}/centroids.cpp
 	${CXX} ${SRC_RAD}/centroids.cpp ${ROOTCFLAGS} -I${INC} ${ROOTLIBS} -o ${BIN}/centroids

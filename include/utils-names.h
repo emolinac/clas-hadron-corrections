@@ -20,6 +20,11 @@ std::string get_acc_file_name(int vertex_cut_value, int dat_target_index)
     return acc_result_dir+"acc"+targets[vertex_cut_value-1][dat_target_index]+".root";
 }
 
+std::string get_clt_file_name(int sim_target_index)
+{
+    return acc_result_dir+"ct_"+sim_targets[sim_target_index]+"_ntuple.root";
+}
+
 std::string get_ctr_file_name(int vertex_cut_value, int dat_target_index, int Q2_bin, int Nu_bin, int Zh_bin)
 {
     return rad_result_dir+"centroids"+targets[vertex_cut_value-1][dat_target_index]+"_"+std::to_string(Q2_bin)+std::to_string(Nu_bin)+std::to_string(Zh_bin)+".root";

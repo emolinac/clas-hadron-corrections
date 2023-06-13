@@ -20,6 +20,7 @@ const char* ntuple_rec_name = "ntuple_accept";
 const char* ntuple_dat_name = "ntuple_data";
 const char* ntuple_rad_name = "ntuple_rad";
 const char* ntuple_ctr_name = "ntuple_centroids";
+const char* ntuple_ref_name = "ntuple_corrdata";
 
 // Targets
 std::string sim_targets[4] = { "C" , "Fe" , "Pb" , "D" };
