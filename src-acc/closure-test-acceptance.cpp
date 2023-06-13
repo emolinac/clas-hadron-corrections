@@ -59,7 +59,7 @@ int main(int argc, char* argv[])
     TCut VZ_cut = Form("VC_TM==%i",vertex_cut_value);
     
     TCut cuts_dat = Q2_cut&&Nu_cut&&Zh_cut&&VZ_cut;
-    TCut cuts_ref = Q2_cut&&Nu_cut&&Zh_cut&&VZ_cut;
+    TCut cuts_ref = Q2_cut&&Nu_cut&&Zh_cut;
     TCut cuts_thr = Q2_cut&&Nu_cut&&Zh_cut;
     TCut cuts_rec = Q2_cut&&Nu_cut&&Zh_cut;
 
