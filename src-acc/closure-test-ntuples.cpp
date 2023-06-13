@@ -55,7 +55,7 @@ int main(int argc, char* argv[])
     // Create TNtuples for the closure test
     TNtuple* ntuple_thr_ct = new TNtuple(ntuple_thr_name,ntuple_thr_name,"Q2:Nu:Zh:Pt2:PhiPQ:Xf:deltaZ");
     TNtuple* ntuple_rec_ct = new TNtuple(ntuple_rec_name,ntuple_rec_name,"Q2:Nu:Zh:Pt2:PhiPQ:Xf:deltaZ:YC");
-    TNtuple* ntuple_dat_ct = new TNtuple(ntuple_dat_name,ntuple_dat_name,"Q2:Nu:Zh:Pt2:PhiPQ:Xf:deltaZ:YC");
+    TNtuple* ntuple_dat_ct = new TNtuple(ntuple_dat_name,ntuple_dat_name,"Q2:Nu:Zh:Pt2:PhiPQ:Xf:deltaZ:YC:VC_TM");
     TNtuple* ntuple_ref_ct = new TNtuple(ntuple_ref_name,ntuple_ref_name,"Q2:Nu:Zh:Pt2:PhiPQ:Xf:deltaZ");
 
     std::cout<<"Ntuples declared."<<std::endl;
@@ -80,7 +80,7 @@ int main(int argc, char* argv[])
         ntuple_rec->GetEntry(entry);
 
         r->Uniform(0,1)<0.5 ? ntuple_rec_ct->Fill(Q2_rec, Nu_rec, Zh_rec, Pt2_rec, PhiPQ_rec, Xf_rec, deltaZ_rec, YC_rec):
-                              ntuple_dat_ct->Fill(Q2_rec, Nu_rec, Zh_rec, Pt2_rec, PhiPQ_rec, Xf_rec, deltaZ_rec, YC_rec);
+                              ntuple_dat_ct->Fill(Q2_rec, Nu_rec, Zh_rec, Pt2_rec, PhiPQ_rec, Xf_rec, deltaZ_rec, YC_rec, VC_rec);
     }
 
     std::cout<<"# CT Rec entries = "<<ntuple_rec_ct->GetEntries()<<std::endl;
